@@ -83,4 +83,18 @@ public class CrisisResourceImp implements CrisisResourceFacade {
         
     }
 
+    public boolean isCrisisExists(String crisisCode) {
+        try{
+        Query query = em.createNamedQuery("Crisis.findByCode", Crisis.class);
+        query.setParameter("code", crisisCode);
+        
+        if (query.getSingleResult() != null) {
+            return true;
+        }
+        }catch(NoResultException e){
+            return false;
+        }
+        return false;
+    }
+
 }

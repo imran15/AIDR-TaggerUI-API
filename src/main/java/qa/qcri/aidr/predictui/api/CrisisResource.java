@@ -4,12 +4,9 @@
  */
 package qa.qcri.aidr.predictui.api;
 
-import java.util.ArrayList;
 import java.util.List;
-import javassist.NotFoundException;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.naming.NameNotFoundException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -55,7 +52,17 @@ public class CrisisResource {
         }
         return Response.ok(crisis).build();
     }
-    
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/code/{code}")
+    public Response isCrisisExists(@PathParam("code") String crisisCode) {
+        boolean crisisExists = false;
+        crisisExists = crisisLocalEJB.isCrisisExists(crisisCode);
+        String response = "{\"crisisCode\":\"" + crisisCode + "\", \"exists\":\"" + crisisExists + "\"}";
+        return Response.ok(response).build();
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/all")
@@ -66,17 +73,17 @@ public class CrisisResource {
         response.setCrisises(crisisList);
         return Response.ok(response).build();
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllCrisisByUserID(@QueryParam("userID")int userID) {
+    public Response getAllCrisisByUserID(@QueryParam("userID") int userID) {
         List<Crisis> crisisList = crisisLocalEJB.getAllCrisisByUserID(userID);
         ResponseWrapper response = new ResponseWrapper();
-        if (crisisList == null){
+        if (crisisList == null) {
             response.setMessage("No crisis found associated with the given user id.");
             return Response.ok(response).build();
         }
-        
+
         response.setCrisises(crisisList);
         return Response.ok(response).build();
     }
@@ -94,5 +101,4 @@ public class CrisisResource {
         return Response.ok(Config.STATUS_CODE_SUCCESS).build();
 
     }
-    
 }
