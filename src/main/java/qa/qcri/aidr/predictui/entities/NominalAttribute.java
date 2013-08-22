@@ -146,7 +146,7 @@ public class NominalAttribute implements Serializable {
         this.users = users;
     }
 
-    @XmlTransient
+    //@XmlTransient
     @JsonIgnore
     public Collection<NominalLabel> getNominalLabelCollection() {
         return nominalLabelCollection;

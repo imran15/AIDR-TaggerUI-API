@@ -38,7 +38,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     @NamedQuery(name = "NominalLabel.findByNominalLabelID", query = "SELECT n FROM NominalLabel n WHERE n.nominalLabelID = :nominalLabelID"),
     @NamedQuery(name = "NominalLabel.findByNominalLabelCode", query = "SELECT n FROM NominalLabel n WHERE n.nominalLabelCode = :nominalLabelCode"),
     @NamedQuery(name = "NominalLabel.findByName", query = "SELECT n FROM NominalLabel n WHERE n.name = :name"),
-    @NamedQuery(name = "NominalLabel.findByDescription", query = "SELECT n FROM NominalLabel n WHERE n.description = :description")})
+    @NamedQuery(name = "NominalLabel.findByDescription", query = "SELECT n FROM NominalLabel n WHERE n.description = :description"),
+    @NamedQuery(name = "NominalLabel.findByNominalAttribute", query = "SELECT n FROM NominalLabel n WHERE n.nominalAttribute = :nominalAttribute")})
 public class NominalLabel implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -135,6 +136,7 @@ public class NominalLabel implements Serializable {
         this.modelNominalLabelCollection = modelNominalLabelCollection;
     }
 
+    @XmlTransient
     public NominalAttribute getNominalAttribute() {
         return nominalAttribute;
     }

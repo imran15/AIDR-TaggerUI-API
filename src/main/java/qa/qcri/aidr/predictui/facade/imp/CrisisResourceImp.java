@@ -13,6 +13,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import qa.qcri.aidr.predictui.entities.Crisis;
 import qa.qcri.aidr.predictui.entities.ModelFamily;
+import qa.qcri.aidr.predictui.entities.NominalLabel;
 import qa.qcri.aidr.predictui.entities.Users;
 import qa.qcri.aidr.predictui.facade.CrisisResourceFacade;
 
@@ -79,6 +80,13 @@ public class CrisisResourceImp implements CrisisResourceFacade {
             for (Crisis crisis: crisisList){
                 Query attributeQuery = em.createNamedQuery("ModelFamily.findByCrisis", ModelFamily.class );
                 attributeQuery.setParameter("crisis", crisis);
+                List<ModelFamily> mfList = attributeQuery.getResultList();
+                //getting labels for individual attribute
+                for (ModelFamily mf: mfList){
+                    Query labelQuery = em.createNamedQuery("NominalLabel.findByNominalAttribute", NominalLabel.class);
+                    labelQuery.setParameter("nominalAttribute", mf.getNominalAttribute());
+                    mf.getNominalAttribute().setNominalLabelCollection(labelQuery.getResultList());
+                }
                 crisis.setModelFamilyCollection(attributeQuery.getResultList());
             }
         }
