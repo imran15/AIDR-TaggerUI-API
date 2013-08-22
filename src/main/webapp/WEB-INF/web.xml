@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.5" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <display-name>AIDR-PredictUI-API</display-name>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+        </welcome-file-list>
+    <persistence-unit-ref>
+<persistence-unit-ref-name>persistence-factory</persistence-unit-ref-name>
+<persistence-unit-name>qa.qcri.aidr.predictui-EJBS</persistence-unit-name>
+</persistence-unit-ref>
+</web-app>
