@@ -59,6 +59,7 @@ public class CrisisResource {
     public Response isCrisisExists(@PathParam("code") String crisisCode) {
         boolean crisisExists = false;
         crisisExists = crisisLocalEJB.isCrisisExists(crisisCode);
+        //TODO: Following way of creating JSON should be chagned through a proper and automatic way
         String response = "{\"crisisCode\":\"" + crisisCode + "\", \"exists\":\"" + crisisExists + "\"}";
         return Response.ok(response).build();
     }

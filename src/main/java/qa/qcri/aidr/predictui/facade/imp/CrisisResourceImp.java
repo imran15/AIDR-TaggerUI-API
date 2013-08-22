@@ -55,6 +55,12 @@ public class CrisisResourceImp implements CrisisResourceFacade {
         List<Crisis> crisisList = new ArrayList<Crisis>();
         Query q = em.createNamedQuery("Crisis.findAll", Crisis.class);
         crisisList = q.getResultList();
+        //for getting attributes for individual crisis
+            for (Crisis crisis: crisisList){
+                Query attributeQuery = em.createNamedQuery("ModelFamily.findByCrisis", ModelFamily.class );
+                attributeQuery.setParameter("crisis", crisis);
+                crisis.setModelFamilyCollection(attributeQuery.getResultList());
+            }
         return crisisList;
     }
 

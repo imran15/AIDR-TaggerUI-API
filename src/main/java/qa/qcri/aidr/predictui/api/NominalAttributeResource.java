@@ -15,8 +15,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import qa.qcri.aidr.predictui.dto.CrisisAttributesDTO;
 import qa.qcri.aidr.predictui.entities.NominalAttribute;
 import qa.qcri.aidr.predictui.facade.NominalAttributeFacade;
 
@@ -47,6 +49,17 @@ public class NominalAttributeResource {
         ResponseWrapper response = new ResponseWrapper();
         response.setMessage("SUCCESS");
         response.setNominalAttributes(attributeList);
+        return Response.ok(response).build();
+    }
+    
+    @GET
+    @Produces("application/json")
+    @Path("/crisis/all")
+    public Response getAllNominalAttributesWithCrisis(@QueryParam("exceptCrisis") int crisisID) {
+        List<CrisisAttributesDTO> attributeList = attributeLocalEJB.getAllAttributesExceptCrisis(crisisID);
+        ResponseWrapper response = new ResponseWrapper();
+        response.setMessage("SUCCESS");
+        response.setCrisisAttributes(attributeList);
         return Response.ok(response).build();
     }
     

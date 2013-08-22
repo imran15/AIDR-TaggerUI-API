@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+import qa.qcri.aidr.predictui.dto.CrisisAttributesDTO;
 import qa.qcri.aidr.predictui.entities.AidrCollection;
 import qa.qcri.aidr.predictui.entities.Crisis;
 import qa.qcri.aidr.predictui.entities.CrisisType;
@@ -41,7 +42,8 @@ import qa.qcri.aidr.predictui.entities.NominalLabel;
     "modelFamilies",
     "modelNominalLabels",
     "collections",
-    "modelWrapper"
+    "modelWrapper",
+    "crisisAttributes"
 })
 @XmlRootElement(name = "responseWrapper")
 @JsonSerialize(include = Inclusion.NON_DEFAULT)
@@ -60,6 +62,7 @@ public class ResponseWrapper implements Serializable {
     private List<ModelNominalLabel> modelNominalLabels;
     private List<AidrCollection> collections;
     private List<ModelWrapper> modelWrapper;
+    private List<CrisisAttributesDTO> crisisAttributes;
 
     public ResponseWrapper(String statusCode, String message) {
         this.statusCode = statusCode;
@@ -251,6 +254,20 @@ public class ResponseWrapper implements Serializable {
      */
     public void setModelWrapper(List<ModelWrapper> modelWrapper) {
         this.modelWrapper = modelWrapper;
+    }
+
+    /**
+     * @return the crisisAttributes
+     */
+    public List<CrisisAttributesDTO> getCrisisAttributes() {
+        return crisisAttributes;
+    }
+
+    /**
+     * @param crisisAttributes the crisisAttributes to set
+     */
+    public void setCrisisAttributes(List<CrisisAttributesDTO> crisisAttributes) {
+        this.crisisAttributes = crisisAttributes;
     }
 
     
