@@ -14,6 +14,7 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -60,6 +61,19 @@ public class NominalAttributeResource {
         ResponseWrapper response = new ResponseWrapper();
         response.setMessage("SUCCESS");
         response.setCrisisAttributes(attributeList);
+        return Response.ok(response).build();
+    }
+    
+    @GET
+    @Produces("application/json")
+    @Path("{attributeID}")
+    public Response getAttributesnLabelByAttrID(@PathParam("attributeID") int attributeID) {
+        NominalAttribute attribute = attributeLocalEJB.getAttributeByID(attributeID);
+        ResponseWrapper response = new ResponseWrapper();
+        if (attribute != null){
+            return Response.ok(attribute).build();
+        }
+        response.setMessage("no attribute found with the given id.");
         return Response.ok(response).build();
     }
     

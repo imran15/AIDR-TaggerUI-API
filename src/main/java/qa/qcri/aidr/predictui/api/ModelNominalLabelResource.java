@@ -52,8 +52,11 @@ public class ModelNominalLabelResource {
     public Response getAllModelNominalLabelsByModelID(@PathParam("modelID") int modelID) {
         List<ModelNominalLabel> modelNominalLabelList = modelNominalLabel.getAllModelNominalLabelsByModelID(modelID);
         ResponseWrapper response = new ResponseWrapper();
-        response.setMessage("SUCCESS");
+        if (modelNominalLabelList != null){
         response.setModelNominalLabels(modelNominalLabelList);
+        return Response.ok(response).build();
+        }
+        response.setMessage("no labels found for the given model-id.");
         return Response.ok(response).build();
     }
 }

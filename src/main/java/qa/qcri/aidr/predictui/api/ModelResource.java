@@ -71,11 +71,14 @@ public class ModelResource {
    
    @GET
    @Produces(MediaType.APPLICATION_JSON)
-   @Path("attribute/{crisisID}")
+   @Path("crisis/{crisisID}")
    public Response getModelByCrisisID(@PathParam("crisisID") int modelFamilyID){
        List<ModelWrapper> modelList = modelLocalEJB.getModelByCrisisID(modelFamilyID);
        ResponseWrapper response = new ResponseWrapper();
-        response.setMessage(Config.STATUS_CODE_SUCCESS);
+       if (modelList == null){
+           response.setMessage("No models found for the given crisis-id");
+           return Response.ok(response).build();
+       }
         response.setModelWrapper(modelList);
        return Response.ok(response).build();
    }

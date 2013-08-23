@@ -31,11 +31,13 @@ public class ModelNominalLabelImp implements ModelNominalLabelFacade{
     }
 
     public List<ModelNominalLabel> getAllModelNominalLabelsByModelID(int modelID) {
+        List<ModelNominalLabel> modelNominalLabelList=null;
         Model model = em.find(Model.class, modelID);
+        if (model != null){
         Query query = em.createNamedQuery("ModelNominalLabel.findByModel", ModelNominalLabel.class);
         query.setParameter("model", model);
-        List<ModelNominalLabel> modelNominalLabelList = query.getResultList();
-        
+        modelNominalLabelList = query.getResultList();
+        }
         return modelNominalLabelList;
     }
     

@@ -14,6 +14,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -102,6 +103,7 @@ public class ModelNominalLabel implements Serializable {
         this.classifiedDocumentCount = classifiedDocumentCount;
     }
 
+    @XmlTransient
     public Model getModel() {
         return model;
     }

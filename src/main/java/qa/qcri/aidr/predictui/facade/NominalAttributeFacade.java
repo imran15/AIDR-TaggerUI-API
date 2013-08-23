@@ -20,6 +20,8 @@ public interface NominalAttributeFacade {
     
     public NominalAttribute editAttribute(NominalAttribute attribute);
     
+    public NominalAttribute getAttributeByID(int attributeID);
+    
     public List<NominalAttribute> getAllAttributes();
     
     public List<CrisisAttributesDTO> getAllAttributesExceptCrisis(int crisisID);
