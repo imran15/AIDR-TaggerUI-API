@@ -63,10 +63,10 @@ public class NominalAttributeFacadeImp implements NominalAttributeFacade {
             for (Object[] row : rows) {
                 attribute = new CrisisAttributesDTO();
                 attribute.setNominalAttributeID(((Integer) row[0]).intValue());
-                attribute.setName((String) row[1]);
-                attribute.setDescription((String) row[2]);
-                attribute.setCode(((String) row[3]));
-                attribute.setUserID(((Integer) row[4]).intValue());
+                attribute.setUserID(((Integer) row[1]).intValue());
+                attribute.setName((String) row[2]);
+                attribute.setDescription((String) row[3]);
+                attribute.setCode(((String) row[4]));
 //            if (row[5] != null)
 //                attribute.setCrisisID(((Integer)row[5]).intValue());
 //            else
