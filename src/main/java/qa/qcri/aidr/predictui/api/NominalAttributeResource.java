@@ -48,7 +48,6 @@ public class NominalAttributeResource {
     public Response getAllNominalAttributes() {
         List<NominalAttribute> attributeList = attributeLocalEJB.getAllAttributes();
         ResponseWrapper response = new ResponseWrapper();
-        response.setMessage("SUCCESS");
         response.setNominalAttributes(attributeList);
         return Response.ok(response).build();
     }
@@ -59,7 +58,10 @@ public class NominalAttributeResource {
     public Response getAllNominalAttributesWithCrisis(@QueryParam("exceptCrisis") int crisisID) {
         List<CrisisAttributesDTO> attributeList = attributeLocalEJB.getAllAttributesExceptCrisis(crisisID);
         ResponseWrapper response = new ResponseWrapper();
-        response.setMessage("SUCCESS");
+        if (attributeList.isEmpty() || attributeList == null){
+            response.setMessage("No attribute left.");
+            return Response.ok(response).build();
+        }
         response.setCrisisAttributes(attributeList);
         return Response.ok(response).build();
     }

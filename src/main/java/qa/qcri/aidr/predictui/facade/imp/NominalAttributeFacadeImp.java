@@ -51,8 +51,10 @@ public class NominalAttributeFacadeImp implements NominalAttributeFacade {
 
     public List<CrisisAttributesDTO> getAllAttributesExceptCrisis(int crisisID) {
         List<CrisisAttributesDTO> attributesList = new ArrayList();
-        String sql = "select na.*, mf.crisisID from nominal_attribute na\n"
-                + " left join model_family mf on na.nominalAttributeID = mf.nominalAttributeID where mf.crisisID != :crisisID";
+        //String sql = "select na.*, mf.crisisID from nominal_attribute na\n"
+        //        + " left join model_family mf on na.nominalAttributeID = mf.nominalAttributeID where mf.crisisID != :crisisID";
+        String sql = "select na.*, mf.crisisID from nominal_attribute na\n" +
+                     "  left join model_family mf on na.nominalAttributeID = mf.nominalAttributeID and mf.crisisID = :crisisID where mf.crisisID is null";
         try {
             Query query = em.createNativeQuery(sql);
             query.setParameter("crisisID", crisisID);
