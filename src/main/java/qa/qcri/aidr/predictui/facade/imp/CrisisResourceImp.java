@@ -82,13 +82,13 @@ public class CrisisResourceImp implements CrisisResourceFacade {
                 attributeQuery.setParameter("crisis", crisis);
                 List<ModelFamily> mfList = attributeQuery.getResultList();
                 //getting labels for individual attribute
-                for (ModelFamily mf: mfList){
-                    Query labelQuery = em.createNamedQuery("NominalLabel.findByNominalAttribute", NominalLabel.class);
-                    labelQuery.setParameter("nominalAttribute", mf.getNominalAttribute());
-                    mf.getNominalAttribute().setNominalLabelCollection(labelQuery.getResultList());
-                }
+                    for (ModelFamily mf: mfList){
+                        Query labelQuery = em.createNamedQuery("NominalLabel.findByNominalAttribute", NominalLabel.class);
+                        labelQuery.setParameter("nominalAttribute", mf.getNominalAttribute());
+                        mf.getNominalAttribute().setNominalLabelCollection(labelQuery.getResultList());
+                    }
                 crisis.setModelFamilyCollection(attributeQuery.getResultList());
-            }
+           }
         }
         }catch (NoResultException e){
             return null;
