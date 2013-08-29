@@ -36,6 +36,7 @@ public class ApplicationConfig extends Application {
         resources.add(qa.qcri.aidr.predictui.api.ModelResource.class);
         resources.add(qa.qcri.aidr.predictui.api.NominalAttributeResource.class);
         resources.add(qa.qcri.aidr.predictui.api.NominalLabelResource.class);
+        resources.add(qa.qcri.aidr.predictui.api.UserResource.class);
     }
     
 }
