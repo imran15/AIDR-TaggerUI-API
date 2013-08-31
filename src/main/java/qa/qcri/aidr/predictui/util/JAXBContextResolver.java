@@ -8,10 +8,12 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.ws.rs.ext.ContextResolver;
 import javax.xml.bind.JAXBContext;
+import org.hibernate.annotations.Proxy;
 
 
-@Startup
-@Singleton
+import javax.ws.rs.ext.Provider;
+
+@Provider
 public class JAXBContextResolver implements ContextResolver<JAXBContext> {
 
     private JAXBContext context;
@@ -22,7 +24,7 @@ public class JAXBContextResolver implements ContextResolver<JAXBContext> {
     };
 
     public JAXBContextResolver() throws Exception {
-        this.context = new JSONJAXBContext(JSONConfiguration.mapped().arrays("crisises", "crisis").build(), types);
+        this.context = new JSONJAXBContext(JSONConfiguration.mapped().arrays().build(), types);
     }
 
     @Override

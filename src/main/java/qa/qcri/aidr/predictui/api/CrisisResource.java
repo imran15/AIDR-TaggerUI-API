@@ -21,6 +21,8 @@ import javax.ws.rs.core.UriInfo;
 import qa.qcri.aidr.predictui.entities.Crisis;
 import qa.qcri.aidr.predictui.facade.CrisisResourceFacade;
 import qa.qcri.aidr.predictui.util.Config;
+import qa.qcri.aidr.predictui.util.JAXBContextResolver;
+import qa.qcri.aidr.predictui.util.Lists;
 import qa.qcri.aidr.predictui.util.ResponseWrapper;
 
 /**
@@ -77,16 +79,15 @@ public class CrisisResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllCrisisByUserID(@QueryParam("userID") int userID) {
+    public ResponseWrapper getAllCrisisByUserID(@QueryParam("userID") int userID) throws Exception {
         List<Crisis> crisisList = crisisLocalEJB.getAllCrisisByUserID(userID);
         ResponseWrapper response = new ResponseWrapper();
         if (crisisList == null) {
             response.setMessage("No crisis found associated with the given user id.");
-            return Response.ok(response).build();
+            return response;
         }
-
         response.setCrisises(crisisList);
-        return Response.ok(response).build();
+        return response;
     }
 
     @POST
