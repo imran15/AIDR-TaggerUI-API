@@ -26,6 +26,7 @@ public class UserResourceImp implements UserResourceFacade {
         try {
             em.persist(user);
         } catch (Exception ex) {
+            ex.printStackTrace();
             return null;
         }
         return user;

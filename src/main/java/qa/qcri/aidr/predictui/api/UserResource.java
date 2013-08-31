@@ -46,7 +46,7 @@ public class UserResource {
         if (createdUser == null){
             return Response.ok("Error while creating new user.").build();
         }
-        return Response.ok(user).build();
+        return Response.ok(createdUser).build();
 
     }
     
@@ -58,7 +58,8 @@ public class UserResource {
 
         Users user = userLocalEJB.getUserByName(userName);
         if (user == null){
-            return Response.ok("{}").build();
+//            return the same object but with empty id and role. By empty id we can see that user does not exist.
+            user = new Users(null, userName, null);
         }
         return Response.ok(user).build();
 
