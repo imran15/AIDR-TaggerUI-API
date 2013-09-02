@@ -5,6 +5,8 @@
 package qa.qcri.aidr.predictui.api;
 
 import java.util.List;
+
+import qa.qcri.aidr.predictui.dto.ModelFamilyDTO;
 import qa.qcri.aidr.predictui.util.ResponseWrapper;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -71,7 +73,9 @@ public class ModelFamilyResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addCrisisAttribute(ModelFamily modelFamily) {
+    public Response addCrisisAttribute(ModelFamilyDTO modelFamilyDTO) {
+//      because ModelFamily has @XmlTransient annotation for crises and crisis was always null
+        ModelFamily modelFamily = transformModelFamilyDTO(modelFamilyDTO);
         try {
             modelFamily = modelFamilyLocalEJB.addCrisisAttribute(modelFamily);
         } catch (RuntimeException e) {
@@ -81,6 +85,13 @@ public class ModelFamilyResource {
         return Response.ok(modelFamily).build();
 
     }
-    
+
+    private ModelFamily transformModelFamilyDTO(ModelFamilyDTO modelFamilyDTO){
+        ModelFamily modelFamily = new ModelFamily();
+        modelFamily.setCrisis(modelFamilyDTO.getCrisis());
+        modelFamily.setNominalAttribute(modelFamilyDTO.getNominalAttribute());
+        modelFamily.setIsActive(modelFamilyDTO.getIsActive());
+        return modelFamily;
+    }
     
 }
