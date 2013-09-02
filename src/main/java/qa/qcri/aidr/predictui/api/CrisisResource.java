@@ -59,10 +59,13 @@ public class CrisisResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/code/{code}")
     public Response isCrisisExists(@PathParam("code") String crisisCode) {
-        boolean crisisExists = false;
-        crisisExists = crisisLocalEJB.isCrisisExists(crisisCode);
+        Integer crisisId = crisisLocalEJB.isCrisisExists(crisisCode);
+//        null value can not be correct deserialized
+        if (crisisId == null){
+            crisisId = 0;
+        }
         //TODO: Following way of creating JSON should be chagned through a proper and automatic way
-        String response = "{\"crisisCode\":\"" + crisisCode + "\", \"exists\":\"" + crisisExists + "\"}";
+        String response = "{\"crisisCode\":\"" + crisisCode + "\", \"crisisId\":\"" + crisisId + "\"}";
         return Response.ok(response).build();
     }
 

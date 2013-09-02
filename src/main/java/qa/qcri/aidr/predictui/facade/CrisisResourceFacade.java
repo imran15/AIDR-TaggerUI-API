@@ -24,7 +24,7 @@ public interface CrisisResourceFacade {
    
    public Crisis getCrisisByID(int id);
    
-   public boolean isCrisisExists(String crisisCode);
+   public Integer isCrisisExists(String crisisCode);
    
    public List<Crisis> getAllCrisis(); 
    
