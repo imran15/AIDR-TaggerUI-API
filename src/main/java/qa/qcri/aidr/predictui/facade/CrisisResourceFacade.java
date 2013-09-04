@@ -4,12 +4,10 @@
  */
 package qa.qcri.aidr.predictui.facade;
 
-import java.util.Collection;
 import java.util.List;
 import javax.ejb.Local;
 import javax.persistence.PersistenceException;
 import qa.qcri.aidr.predictui.entities.Crisis;
-import qa.qcri.aidr.predictui.entities.ModelFamily;
 
 /**
  *
@@ -23,7 +21,9 @@ public interface CrisisResourceFacade {
    public Crisis editCrisis(Crisis crisis); 
    
    public Crisis getCrisisByID(int id);
-   
+
+   public Crisis getCrisisByCode(String code);
+
    public Integer isCrisisExists(String crisisCode);
    
    public List<Crisis> getAllCrisis(); 

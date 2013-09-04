@@ -42,6 +42,12 @@ public class CrisisResourceImp implements CrisisResourceFacade {
         return crisis;
     }
 
+    public Crisis getCrisisByCode(String code) {
+        Query query = em.createNamedQuery("Crisis.findByCode", Crisis.class);
+        query.setParameter("code", code);
+        return query.getSingleResult() != null ? (Crisis) query.getSingleResult() : null;
+    }
+
     public Crisis editCrisis(Crisis crisis) {
         Crisis cr = em.find(Crisis.class, crisis.getCrisisID());
         if (cr != null) {

@@ -18,11 +18,12 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+
+import qa.qcri.aidr.predictui.dto.CrisisDTO;
+import qa.qcri.aidr.predictui.dto.CrisisTypeDTO;
 import qa.qcri.aidr.predictui.entities.Crisis;
 import qa.qcri.aidr.predictui.facade.CrisisResourceFacade;
 import qa.qcri.aidr.predictui.util.Config;
-import qa.qcri.aidr.predictui.util.JAXBContextResolver;
-import qa.qcri.aidr.predictui.util.Lists;
 import qa.qcri.aidr.predictui.util.ResponseWrapper;
 
 /**
@@ -53,6 +54,20 @@ public class CrisisResource {
             return Response.ok(new ResponseWrapper(Config.STATUS_CODE_FAILED, e.getCause().getCause().getMessage())).build();
         }
         return Response.ok(crisis).build();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/by-code/{code}")
+    public Response getCrisisByCode(@PathParam("code") String crisisCode) {
+        Crisis crisis = null;
+        try {
+            crisis = crisisLocalEJB.getCrisisByCode(crisisCode);
+        } catch (RuntimeException e) {
+            return Response.ok(new ResponseWrapper(Config.STATUS_CODE_FAILED, e.getCause().getCause().getMessage())).build();
+        }
+        CrisisDTO dto = transformCrisisToDto(crisis);
+        return Response.ok(dto).build();
     }
 
     @GET
@@ -105,5 +120,18 @@ public class CrisisResource {
 
         return Response.ok(Config.STATUS_CODE_SUCCESS).build();
 
+    }
+
+    private CrisisDTO transformCrisisToDto(Crisis c){
+        CrisisTypeDTO typeDTO = null;
+        if (c.getCrisisType() != null) {
+            typeDTO = new CrisisTypeDTO(c.getCrisisType().getCrisisTypeID(), c.getCrisisType().getName());
+        }
+        CrisisDTO dto = new CrisisDTO();
+        dto.setCode(c.getCode());
+        dto.setName(c.getName());
+        dto.setCrisisID(c.getCrisisID());
+        dto.setCrisisType(typeDTO);
+        return dto;
     }
 }
