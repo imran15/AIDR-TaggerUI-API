@@ -7,13 +7,7 @@ package qa.qcri.aidr.predictui.api;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -120,6 +114,19 @@ public class CrisisResource {
 
         return Response.ok(Config.STATUS_CODE_SUCCESS).build();
 
+    }
+
+    @PUT
+    @Consumes("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response editCrisis(Crisis crisis) {
+        try {
+            crisis = crisisLocalEJB.editCrisis(crisis);
+        } catch (RuntimeException e) {
+            return Response.ok(new ResponseWrapper(Config.STATUS_CODE_FAILED, e.getCause().getCause().getMessage())).build();
+        }
+        CrisisDTO dto = transformCrisisToDto(crisis);
+        return Response.ok(dto).build();
     }
 
     private CrisisDTO transformCrisisToDto(Crisis c){

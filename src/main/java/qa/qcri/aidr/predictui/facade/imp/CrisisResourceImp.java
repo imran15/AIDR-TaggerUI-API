@@ -51,7 +51,16 @@ public class CrisisResourceImp implements CrisisResourceFacade {
     public Crisis editCrisis(Crisis crisis) {
         Crisis cr = em.find(Crisis.class, crisis.getCrisisID());
         if (cr != null) {
-            em.merge(cr);
+            cr = em.merge(cr);
+            if (crisis.getCrisisType() != null) {
+                cr.setCrisisType(crisis.getCrisisType());
+            }
+            if (crisis.getCode() != null && crisis.getCode().length() > 0) {
+                cr.setCode(crisis.getCode());
+            }
+            if (crisis.getName() != null && crisis.getName().length() > 0) {
+                cr.setName(crisis.getName());
+            }
             return cr;
         } else {
             throw new RuntimeException("Not found");
