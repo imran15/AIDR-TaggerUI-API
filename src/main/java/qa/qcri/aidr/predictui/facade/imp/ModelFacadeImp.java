@@ -61,24 +61,29 @@ public class ModelFacadeImp implements ModelFacade {
         List<ModelWrapper> modelWrapperList = null;
         Crisis crisis = em.find(Crisis.class, crisisID);
         if (crisis != null) {
-            modelWrapperList = new ArrayList();
-            Collection<ModelFamily> modelFamilList = crisis.getModelFamilyCollection();
-            // for each modelFamily get all the modesl and take avg
-            for (ModelFamily modelFamily : modelFamilList) {
+            modelWrapperList = new ArrayList<ModelWrapper>();
+            Collection<ModelFamily> modelFamilyList = crisis.getModelFamilyCollection();
+            // for each modelFamily get all the models and take avg
+            for (ModelFamily modelFamily : modelFamilyList) {
                 Collection<Model> modelList = modelFamily.getModelCollection();
                 ModelWrapper modelWrapper = new ModelWrapper();
                 long trainingExamples = 0;
                 long classigiedElements = 0;
                 double auc = 0.0;
+                double aucAverage = 0.0;
                 int modelID = 0;
 
-                for (Model model : modelList) {
-                    trainingExamples += model.getTrainingCount();
-                    auc += model.getAvgAuc();
-                    modelID = model.getModelID();
+//                if size 0 we will get NaN for aucAverage
+                if (modelList.size() > 0) {
+                    for (Model model : modelList) {
+                        trainingExamples += model.getTrainingCount();
+                        auc += model.getAvgAuc();
+                        modelID = model.getModelID();
+                    }
+                    aucAverage = auc / modelList.size();
                 }
                 modelWrapper.setAttribute(modelFamily.getNominalAttribute().getName());
-                modelWrapper.setAuc(auc / modelList.size());
+                modelWrapper.setAuc(aucAverage);
                 modelWrapper.setClassifiedDocuments(0); //TODO: putting it for now as zero
                 modelWrapper.setStatus(""); //TODO: setting status as empty text, 
                 modelWrapper.setTrainingExamples(trainingExamples);
