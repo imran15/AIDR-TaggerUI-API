@@ -14,6 +14,7 @@ import javax.xml.bind.annotation.XmlType;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import qa.qcri.aidr.predictui.dto.CrisisAttributesDTO;
+import qa.qcri.aidr.predictui.dto.TrainingDataDTO;
 import qa.qcri.aidr.predictui.entities.AidrCollection;
 import qa.qcri.aidr.predictui.entities.Crisis;
 import qa.qcri.aidr.predictui.entities.CrisisType;
@@ -43,7 +44,8 @@ import qa.qcri.aidr.predictui.entities.NominalLabel;
     "modelNominalLabels",
     "collections",
     "modelWrapper",
-    "crisisAttributes"
+    "crisisAttributes",
+    "trainingData"
 })
 @XmlRootElement(name = "responseWrapper")
 @JsonSerialize(include = Inclusion.NON_DEFAULT)
@@ -63,6 +65,7 @@ public class ResponseWrapper implements Serializable {
     private List<AidrCollection> collections;
     private List<ModelWrapper> modelWrapper;
     private List<CrisisAttributesDTO> crisisAttributes;
+    private List<TrainingDataDTO> trainingData;
 
     public ResponseWrapper(String statusCode, String message) {
         this.statusCode = statusCode;
@@ -268,6 +271,20 @@ public class ResponseWrapper implements Serializable {
      */
     public void setCrisisAttributes(List<CrisisAttributesDTO> crisisAttributes) {
         this.crisisAttributes = crisisAttributes;
+    }
+
+    /**
+     * @return the trainingData
+     */
+    public List<TrainingDataDTO> getTrainingData() {
+        return trainingData;
+    }
+
+    /**
+     * @param trainingData the trainingData to set
+     */
+    public void setTrainingData(List<TrainingDataDTO> trainingData) {
+        this.trainingData = trainingData;
     }
 
     
