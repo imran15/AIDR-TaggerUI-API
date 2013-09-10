@@ -16,6 +16,8 @@ public class CrisisAttributesDTO {
     private String code;
     private Integer crisisID;
     private Integer userID;
+    private Integer labelID;
+    private String labelName;
 
     /**
      * @return the nominalAttributeID
@@ -99,6 +101,34 @@ public class CrisisAttributesDTO {
      */
     public void setUserID(Integer userID) {
         this.userID = userID;
+    }
+
+    /**
+     * @return the labelName
+     */
+    public String getLabelName() {
+        return labelName;
+    }
+
+    /**
+     * @param labelName the labelName to set
+     */
+    public void setLabelName(String labelName) {
+        this.labelName = labelName;
+    }
+
+    /**
+     * @return the labelID
+     */
+    public Integer getLabelID() {
+        return labelID;
+    }
+
+    /**
+     * @param labelID the labelID to set
+     */
+    public void setLabelID(Integer labelID) {
+        this.labelID = labelID;
     }
     
     
