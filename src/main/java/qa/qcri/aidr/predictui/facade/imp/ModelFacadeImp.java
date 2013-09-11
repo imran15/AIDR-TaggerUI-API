@@ -82,10 +82,16 @@ public class ModelFacadeImp implements ModelFacade {
                     }
                     aucAverage = auc / modelList.size();
                 }
+                
                 modelWrapper.setAttribute(modelFamily.getNominalAttribute().getName());
                 modelWrapper.setAuc(aucAverage);
                 modelWrapper.setClassifiedDocuments(0); //TODO: putting it for now as zero
-                modelWrapper.setStatus(""); //TODO: setting status as empty text, 
+                String status ="";
+                if (modelFamily.getIsActive())
+                    status = "Active";
+                else
+                    status = "Inactive";
+                modelWrapper.setStatus(status); 
                 modelWrapper.setTrainingExamples(trainingExamples);
                 modelWrapper.setModelID(modelID);
 

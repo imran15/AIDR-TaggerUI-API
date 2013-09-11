@@ -56,7 +56,7 @@ public class NominalAttributeFacadeImp implements NominalAttributeFacade {
 //        String sql = "select na.*, mf.crisisID from nominal_attribute na\n" +
 //                     "  left join model_family mf on na.nominalAttributeID = mf.nominalAttributeID and mf.crisisID = :crisisID where mf.crisisID is null";
         String sql ="select na.*, nl.nominalLabelID, nl.name, mf.crisisID from nominal_attribute na\n" +
-"join nominal_label nl on na.nominalAttributeID = nl.nominalAttributeID\n" +
+                    "join nominal_label nl on na.nominalAttributeID = nl.nominalAttributeID\n" +
 "                      left join model_family mf on na.nominalAttributeID = mf.nominalAttributeID \n" +
 "                      \n" +
 "                      and mf.crisisID = :crisisID where mf.crisisID is null";
