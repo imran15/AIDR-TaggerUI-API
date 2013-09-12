@@ -15,6 +15,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
+import qa.qcri.aidr.predictui.dto.ModelNominalLabelDTO;
 import qa.qcri.aidr.predictui.entities.ModelNominalLabel;
 import qa.qcri.aidr.predictui.facade.ModelNominalLabelFacade;
 
@@ -50,10 +51,10 @@ public class ModelNominalLabelResource {
     @Produces("application/json")
     @Path("/{modelID}")
     public Response getAllModelNominalLabelsByModelID(@PathParam("modelID") int modelID) {
-        List<ModelNominalLabel> modelNominalLabelList = modelNominalLabel.getAllModelNominalLabelsByModelID(modelID);
+        List<ModelNominalLabelDTO> modelNominalLabelList = modelNominalLabel.getAllModelNominalLabelsByModelID(modelID);
         ResponseWrapper response = new ResponseWrapper();
         if (modelNominalLabelList != null){
-        response.setModelNominalLabels(modelNominalLabelList);
+        response.setModelNominalLabelsDTO(modelNominalLabelList);
         return Response.ok(response).build();
         }
         response.setMessage("no labels found for the given model-id.");

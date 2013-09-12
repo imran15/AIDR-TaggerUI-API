@@ -15,6 +15,7 @@ import javax.xml.bind.annotation.XmlType;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import qa.qcri.aidr.predictui.dto.CrisisAttributesDTO;
+import qa.qcri.aidr.predictui.dto.ModelNominalLabelDTO;
 import qa.qcri.aidr.predictui.dto.TrainingDataDTO;
 import qa.qcri.aidr.predictui.entities.AidrCollection;
 import qa.qcri.aidr.predictui.entities.Crisis;
@@ -43,6 +44,7 @@ import qa.qcri.aidr.predictui.entities.NominalLabel;
     "documents",
     "modelFamilies",
     "modelNominalLabels",
+    "modelNominalLabelsDTO",
     "collections",
     "modelWrapper",
     "crisisAttributes",
@@ -63,6 +65,7 @@ public class ResponseWrapper implements Serializable {
     private List<Document> documents;
     private List<ModelFamily> modelFamilies;
     private List<ModelNominalLabel> modelNominalLabels;
+    private List<ModelNominalLabelDTO> modelNominalLabelsDTO;
     private List<AidrCollection> collections;
     private List<ModelWrapper> modelWrapper;
     private List<CrisisAttributesDTO> crisisAttributes;
@@ -286,6 +289,20 @@ public class ResponseWrapper implements Serializable {
      */
     public void setTrainingData(List<TrainingDataDTO> trainingData) {
         this.trainingData = trainingData;
+    }
+
+    /**
+     * @return the modelNominalLabelsDTO
+     */
+    public List<ModelNominalLabelDTO> getModelNominalLabelsDTO() {
+        return modelNominalLabelsDTO;
+    }
+
+    /**
+     * @param modelNominalLabelsDTO the modelNominalLabelsDTO to set
+     */
+    public void setModelNominalLabelsDTO(List<ModelNominalLabelDTO> modelNominalLabelsDTO) {
+        this.modelNominalLabelsDTO = modelNominalLabelsDTO;
     }
 
     

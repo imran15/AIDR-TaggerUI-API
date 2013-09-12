@@ -6,13 +6,14 @@ package qa.qcri.aidr.predictui.dto;
 
 import qa.qcri.aidr.predictui.entities.*;
 import java.io.Serializable;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Imran
  */
-
+@XmlRootElement
 public class ModelNominalLabelDTO implements Serializable {
 
     protected ModelNominalLabelPK modelNominalLabelPK;

@@ -6,6 +6,7 @@ package qa.qcri.aidr.predictui.facade;
 
 import java.util.List;
 import javax.ejb.Local;
+import qa.qcri.aidr.predictui.dto.ModelNominalLabelDTO;
 import qa.qcri.aidr.predictui.entities.ModelNominalLabel;
 
 /**
@@ -16,6 +17,6 @@ import qa.qcri.aidr.predictui.entities.ModelNominalLabel;
 public interface ModelNominalLabelFacade {
     
     public List<ModelNominalLabel> getAllModelNominalLabels();
-    public List<ModelNominalLabel> getAllModelNominalLabelsByModelID(int modelID);
+    public List<ModelNominalLabelDTO> getAllModelNominalLabelsByModelID(int modelID);
     
 }
