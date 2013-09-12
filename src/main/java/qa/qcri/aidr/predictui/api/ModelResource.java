@@ -19,7 +19,7 @@ import javax.ws.rs.core.Response;
 import qa.qcri.aidr.predictui.entities.Model;
 import qa.qcri.aidr.predictui.facade.ModelFacade;
 import qa.qcri.aidr.predictui.util.Config;
-import qa.qcri.aidr.predictui.util.ModelWrapper;
+import qa.qcri.aidr.predictui.dto.ModelWrapper;
 
 /**
  * REST Web Service

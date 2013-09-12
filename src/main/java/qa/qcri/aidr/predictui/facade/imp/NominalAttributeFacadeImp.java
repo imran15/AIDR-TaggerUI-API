@@ -51,15 +51,11 @@ public class NominalAttributeFacadeImp implements NominalAttributeFacade {
 
     public List<CrisisAttributesDTO> getAllAttributesExceptCrisis(int crisisID) {
         List<CrisisAttributesDTO> attributesList = new ArrayList();
-        //String sql = "select na.*, mf.crisisID from nominal_attribute na\n"
-        //        + " left join model_family mf on na.nominalAttributeID = mf.nominalAttributeID where mf.crisisID != :crisisID";
-//        String sql = "select na.*, mf.crisisID from nominal_attribute na\n" +
-//                     "  left join model_family mf on na.nominalAttributeID = mf.nominalAttributeID and mf.crisisID = :crisisID where mf.crisisID is null";
-        String sql ="select na.*, nl.nominalLabelID, nl.name, mf.crisisID from nominal_attribute na\n" +
-                    "join nominal_label nl on na.nominalAttributeID = nl.nominalAttributeID\n" +
-"                      left join model_family mf on na.nominalAttributeID = mf.nominalAttributeID \n" +
-"                      \n" +
-"                      and mf.crisisID = :crisisID where mf.crisisID is null";
+        String sql = "SELECT na.nominalAttributeID, na.userID, na.name, na.description, na.code, "
+                + " nl.nominalLabelID, nl.name AS lblName FROM nominal_attribute na \n"
+                + " JOIN nominal_label nl ON na.nominalAttributeID = nl.nominalAttributeID \n"
+                + " LEFT JOIN model_family mf ON na.nominalAttributeID = mf.nominalAttributeID \n"
+                + " AND mf.crisisID = :crisisID WHERE mf.crisisID IS NULL";
         try {
             Query query = em.createNativeQuery(sql);
             query.setParameter("crisisID", crisisID);
@@ -74,10 +70,6 @@ public class NominalAttributeFacadeImp implements NominalAttributeFacade {
                 attribute.setCode(((String) row[4]));
                 attribute.setLabelID(((Integer) row[5]).intValue());
                 attribute.setLabelName(((String) row[6]));
-//            if (row[5] != null)
-//                attribute.setCrisisID(((Integer)row[5]).intValue());
-//            else
-//                attribute.setCrisisID(null);
                 attributesList.add(attribute);
             }
             return attributesList;

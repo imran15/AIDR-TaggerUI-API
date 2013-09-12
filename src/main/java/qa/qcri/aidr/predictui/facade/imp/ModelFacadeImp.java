@@ -17,7 +17,9 @@ import javax.persistence.Query;
 import qa.qcri.aidr.predictui.entities.Crisis;
 import qa.qcri.aidr.predictui.entities.Model;
 import qa.qcri.aidr.predictui.entities.ModelFamily;
-import qa.qcri.aidr.predictui.util.ModelWrapper;
+import qa.qcri.aidr.predictui.entities.ModelNominalLabel;
+import qa.qcri.aidr.predictui.entities.NominalAttribute;
+import qa.qcri.aidr.predictui.dto.ModelWrapper;
 
 /**
  *
@@ -79,19 +81,27 @@ public class ModelFacadeImp implements ModelFacade {
                         trainingExamples += model.getTrainingCount();
                         auc += model.getAvgAuc();
                         modelID = model.getModelID();
+
+                        //for each model get all the labels and sum over classifiedDocumentCount
+                        Collection<ModelNominalLabel> modelLabels = model.getModelNominalLabelCollection();
+                        int totalClassifiedDocuments = 0;
+                        for (ModelNominalLabel label : modelLabels) {
+                            totalClassifiedDocuments += label.getClassifiedDocumentCount();
+                        }
+                        classigiedElements = totalClassifiedDocuments;
                     }
                     aucAverage = auc / modelList.size();
                 }
-                
                 modelWrapper.setAttribute(modelFamily.getNominalAttribute().getName());
                 modelWrapper.setAuc(aucAverage);
-                modelWrapper.setClassifiedDocuments(0); //TODO: putting it for now as zero
-                String status ="";
-                if (modelFamily.getIsActive())
-                    status = "Active";
-                else
-                    status = "Inactive";
-                modelWrapper.setStatus(status); 
+                modelWrapper.setClassifiedDocuments(classigiedElements);
+                String status = "";
+                if (modelFamily.getIsActive()) {
+                    status = "RUNNING";
+                } else {
+                    status = "NOT RUNNING";
+                }
+                modelWrapper.setStatus(status);
                 modelWrapper.setTrainingExamples(trainingExamples);
                 modelWrapper.setModelID(modelID);
 

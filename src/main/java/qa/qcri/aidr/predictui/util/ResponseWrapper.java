@@ -4,6 +4,7 @@
  */
 package qa.qcri.aidr.predictui.util;
 
+import qa.qcri.aidr.predictui.dto.ModelWrapper;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
