@@ -16,7 +16,6 @@ import qa.qcri.aidr.predictui.entities.Model;
 import qa.qcri.aidr.predictui.entities.ModelNominalLabel;
 import qa.qcri.aidr.predictui.entities.NominalLabel;
 import java.util.Collection;
-import org.apache.commons.collections.iterators.ArrayListIterator;
 import java.util.ArrayList;
 
 /**
@@ -44,8 +43,10 @@ public class ModelNominalLabelImp implements ModelNominalLabelFacade {
             Query query = em.createNamedQuery("ModelNominalLabel.findByModel", ModelNominalLabel.class);
             query.setParameter("model", model);
             modelNominalLabelList = query.getResultList();
-
-            // Deep copying modelNominalLabel to ModelNominalLabelDTO
+            if (modelNominalLabelList.isEmpty()){
+                return null;
+            }
+            Boolean modelStatus = model.getModelFamily().getIsActive();
             for (ModelNominalLabel labelEntity : modelNominalLabelList) {
 
                 //Getting training examples for each label
@@ -57,7 +58,7 @@ public class ModelNominalLabelImp implements ModelNominalLabelFacade {
                             trainingSet++;
                         }
                     }
-                
+                // Deep copying modelNominalLabel to ModelNominalLabelDTO
                 ModelNominalLabelDTO mnlDTO = new ModelNominalLabelDTO();
                 mnlDTO.setClassifiedDocumentCount(labelEntity.getClassifiedDocumentCount());
                 mnlDTO.setLabelAuc(labelEntity.getLabelAuc());
@@ -67,7 +68,8 @@ public class ModelNominalLabelImp implements ModelNominalLabelFacade {
                 mnlDTO.setModelNominalLabelPK(labelEntity.getModelNominalLabelPK());
                 mnlDTO.setNominalLabel(labelEntity.getNominalLabel());
                 mnlDTO.setTrainingDocuments(trainingSet);
-
+                mnlDTO.setModelStatus(modelStatus==true ? "RUNNING" : "NOT RUNNING");
+                
                 modelNominalLabelDTOList.add(mnlDTO);
             }
 

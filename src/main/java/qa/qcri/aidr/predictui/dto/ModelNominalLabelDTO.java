@@ -24,6 +24,7 @@ public class ModelNominalLabelDTO implements Serializable {
     private Model model;
     private NominalLabel nominalLabel;
     private int trainingDocuments;
+    private String modelStatus;
 
     public ModelNominalLabelDTO() {
     }
@@ -119,6 +120,20 @@ public class ModelNominalLabelDTO implements Serializable {
      */
     public void setTrainingDocuments(int trainingDocuments) {
         this.trainingDocuments = trainingDocuments;
+    }
+
+    /**
+     * @return the modelStatus
+     */
+    public String isModelStatus() {
+        return modelStatus;
+    }
+
+    /**
+     * @param modelStatus the modelStatus to set
+     */
+    public void setModelStatus(String modelStatus) {
+        this.modelStatus = modelStatus;
     }
     
 }
