@@ -18,7 +18,9 @@ public interface NominalLabelResourceFacade {
     
    public NominalLabel addNominalLabel(NominalLabel label); 
    
-   public NominalLabel editNominalLabel(NominalLabel label); 
+   public NominalLabel editNominalLabel(NominalLabel label);
+   
+   public void deleteNominalLabel(int labelID);
    
    public NominalLabel getNominalLabelByID(int id);
    public List<NominalLabel> getAllNominalLabel(); 

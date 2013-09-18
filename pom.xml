@@ -19,6 +19,13 @@
     
     <dependencies>
         <dependency>
+            <groupId>org.glassfish.extras</groupId>
+            <artifactId>glassfish-embedded-all</artifactId>
+            <version>3.0</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>3.6.8.Final</version>
@@ -94,7 +101,7 @@
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>6.0</version>
-            <scope>provided</scope>
+            <!-- <scope>provided</scope> -->
         </dependency>
 	    
         <!-- log4j 
@@ -162,6 +169,11 @@
         </plugins>
     </build>
     <repositories>
-        
+        <repository>
+            <id>java.net.glassfish</id>
+            <name>Repository hosting the jee6 artifacts</name>
+            <url>http://download.java.net/maven/glassfish</url>
+        </repository>
+
     </repositories>
 </project>
