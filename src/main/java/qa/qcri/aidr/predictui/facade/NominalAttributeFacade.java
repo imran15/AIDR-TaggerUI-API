@@ -17,16 +17,11 @@ import qa.qcri.aidr.predictui.entities.NominalAttribute;
 public interface NominalAttributeFacade {
     
     public NominalAttribute addAttribute(NominalAttribute attribute);
-    
     public NominalAttribute editAttribute(NominalAttribute attribute);
-    
+    public void deleteAttribute(int attributeID);
     public NominalAttribute getAttributeByID(int attributeID);
-    
     public List<NominalAttribute> getAllAttributes();
-    
     public List<CrisisAttributesDTO> getAllAttributesExceptCrisis(int crisisID);
-    
-    public List<NominalAttribute> getAllAttributesbyByCollection(int collectionID);
     
     
     

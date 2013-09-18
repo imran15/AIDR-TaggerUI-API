@@ -14,6 +14,8 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -22,6 +24,7 @@ import javax.ws.rs.core.Response;
 import qa.qcri.aidr.predictui.dto.CrisisAttributesDTO;
 import qa.qcri.aidr.predictui.entities.NominalAttribute;
 import qa.qcri.aidr.predictui.facade.NominalAttributeFacade;
+import qa.qcri.aidr.predictui.util.Config;
 
 /**
  * REST Web Service
@@ -86,6 +89,31 @@ public class NominalAttributeResource {
         NominalAttribute attrib =  attributeLocalEJB.addAttribute(attribute);
         return Response.ok(attrib).build();
     }
+    
+    @PUT
+    @Consumes("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response editAttribute(NominalAttribute attribute) {
+        try {
+            attribute = attributeLocalEJB.editAttribute(attribute);
+        } catch (RuntimeException e) {
+            return Response.ok(new ResponseWrapper(Config.STATUS_CODE_FAILED, e.getCause().getCause().getMessage())).build();
+        }
+        return Response.ok(attribute).build();
+    }
 
+    @DELETE
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteAttribute(@PathParam("id") int id) {
+        try {
+            attributeLocalEJB.deleteAttribute(id);
+        } catch (RuntimeException e) {
+            return Response.ok(
+                    new ResponseWrapper(Config.STATUS_CODE_FAILED,
+                    "Error while deleting Attribute.")).build();
+        }
+        return Response.ok(new ResponseWrapper(Config.STATUS_CODE_SUCCESS)).build();
+    }
     
 }

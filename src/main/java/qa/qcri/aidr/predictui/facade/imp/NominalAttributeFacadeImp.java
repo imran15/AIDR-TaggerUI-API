@@ -97,10 +97,6 @@ public class NominalAttributeFacadeImp implements NominalAttributeFacade {
 
     }
 
-    public List<NominalAttribute> getAllAttributesbyByCollection(int crisisID) {
-        return null;
-    }
-
     public NominalAttribute getAttributeByID(int attributeID) {
         NominalAttribute attribute = null;
         try {
@@ -119,5 +115,13 @@ public class NominalAttributeFacadeImp implements NominalAttributeFacade {
             return null;
         }
         return attribute;
+    }
+
+    @Override
+    public void deleteAttribute(int attributeID) {
+        NominalAttribute attribute = em.find(NominalAttribute.class, attributeID);
+        if (attribute != null){
+            em.remove(attribute);
+        }
     }
 }
