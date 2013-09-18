@@ -15,6 +15,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -89,10 +90,10 @@ public class CrisisTypeResource {
         return Response.ok(crisis).build();
     }
 
-    @GET
-    @Path("/delete")
+    @DELETE
+    @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteCrisisType(@QueryParam("id") int id) {
+    public Response deleteCrisisType(@PathParam("id") int id) {
         try {
             crisisTypeLocal.deleteCrisisType(id);
         } catch (RuntimeException e) {
