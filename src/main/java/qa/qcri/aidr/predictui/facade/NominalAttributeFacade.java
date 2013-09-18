@@ -22,6 +22,7 @@ public interface NominalAttributeFacade {
     public NominalAttribute getAttributeByID(int attributeID);
     public List<NominalAttribute> getAllAttributes();
     public List<CrisisAttributesDTO> getAllAttributesExceptCrisis(int crisisID);
+    public Integer isAttributeExists(String attributeCode);
     
     
     

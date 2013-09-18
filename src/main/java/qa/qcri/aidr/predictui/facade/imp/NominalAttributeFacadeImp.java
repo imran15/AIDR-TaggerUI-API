@@ -120,8 +120,24 @@ public class NominalAttributeFacadeImp implements NominalAttributeFacade {
     @Override
     public void deleteAttribute(int attributeID) {
         NominalAttribute attribute = em.find(NominalAttribute.class, attributeID);
-        if (attribute != null){
+        if (attribute != null) {
             em.remove(attribute);
         }
+    }
+
+    @Override
+    public Integer isAttributeExists(String attributeCode) {
+        try {
+            Query query = em.createNamedQuery("NominalAttribute.findByCode", NominalAttribute.class);
+            query.setParameter("code", attributeCode);
+
+            if (query.getSingleResult() != null) {
+                NominalAttribute attribute = (NominalAttribute) query.getSingleResult();
+                return attribute.getNominalAttributeID();
+            }
+        } catch (NoResultException e) {
+            return null;
+        }
+        return null;
     }
 }

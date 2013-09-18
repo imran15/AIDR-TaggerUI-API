@@ -21,6 +21,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import qa.qcri.aidr.predictui.dto.CrisisTypeDTO;
 import qa.qcri.aidr.predictui.entities.CrisisType;
 import qa.qcri.aidr.predictui.facade.CrisisTypeResourceFacade;
 import qa.qcri.aidr.predictui.util.Config;
@@ -59,9 +60,8 @@ public class CrisisTypeResource {
     @Produces("application/json")
     @Path("/all")
     public Response getCrisisTypes() {
-        List<CrisisType> crisisTypeList = crisisTypeLocal.getCrisisTypes();
+        List<CrisisTypeDTO> crisisTypeList = crisisTypeLocal.getCrisisTypes();
         ResponseWrapper response = new ResponseWrapper();
-        response.setMessage(Config.STATUS_CODE_SUCCESS);
         response.setCrisisTypes(crisisTypeList);
         return Response.ok(response).build();
     }

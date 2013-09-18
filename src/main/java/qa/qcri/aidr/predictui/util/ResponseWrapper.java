@@ -15,6 +15,7 @@ import javax.xml.bind.annotation.XmlType;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import qa.qcri.aidr.predictui.dto.CrisisAttributesDTO;
+import qa.qcri.aidr.predictui.dto.CrisisTypeDTO;
 import qa.qcri.aidr.predictui.dto.ModelNominalLabelDTO;
 import qa.qcri.aidr.predictui.dto.TrainingDataDTO;
 import qa.qcri.aidr.predictui.entities.AidrCollection;
@@ -57,7 +58,7 @@ public class ResponseWrapper implements Serializable {
     protected String statusCode;
     protected String message;
     protected Object dataObject;
-    private List<CrisisType> crisisTypes;
+    private List<CrisisTypeDTO> crisisTypes;
     private List<Crisis> crisises;
     private List<NominalLabel> nominalLabels;
     private List<NominalAttribute> nominalAttributes;
@@ -87,7 +88,7 @@ public class ResponseWrapper implements Serializable {
     }
 
     public ResponseWrapper() {
-        crisisTypes = new ArrayList<CrisisType>();
+        crisisTypes = new ArrayList<CrisisTypeDTO>();
     }
 
     public String getStatusCode() {
@@ -126,14 +127,14 @@ public class ResponseWrapper implements Serializable {
     /**
      * @return the crisisTypes
      */
-    public List<CrisisType> getCrisisTypes() {
+    public List<CrisisTypeDTO> getCrisisTypes() {
         return crisisTypes;
     }
 
     /**
      * @param crisisTypes the crisisTypes to set
      */
-    public void setCrisisTypes(List<CrisisType> crisisTypes) {
+    public void setCrisisTypes(List<CrisisTypeDTO> crisisTypes) {
         this.crisisTypes = crisisTypes;
     }
 

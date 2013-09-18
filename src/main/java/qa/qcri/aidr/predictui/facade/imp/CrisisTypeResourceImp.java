@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import qa.qcri.aidr.predictui.dto.CrisisTypeDTO;
 import qa.qcri.aidr.predictui.entities.CrisisType;
 import qa.qcri.aidr.predictui.facade.CrisisTypeResourceFacade;
 
@@ -23,11 +24,22 @@ public class CrisisTypeResourceImp implements CrisisTypeResourceFacade {
     @PersistenceContext(unitName = "qa.qcri.aidr.predictui-EJBS")
     private EntityManager em;
 
-    public List<CrisisType> getCrisisTypes() {
+    public List<CrisisTypeDTO> getCrisisTypes() {
         List<CrisisType> crisisList = new ArrayList<CrisisType>();
+        List<CrisisTypeDTO> crisisTypeDTOList = new ArrayList<CrisisTypeDTO>();
         Query q = em.createNamedQuery("CrisisType.findAll", CrisisType.class);
         crisisList = q.getResultList();
-        return crisisList;
+        for (CrisisType cType: crisisList){
+            int crisisAssociated = cType.getCrisisCollection().size();
+            CrisisTypeDTO ctDTO = new CrisisTypeDTO();
+            ctDTO.setCrisisTypeID(cType.getCrisisTypeID());
+            ctDTO.setName(cType.getName());
+            ctDTO.setNumberOfCrisisAssociated(crisisAssociated);
+            
+            crisisTypeDTOList.add(ctDTO);
+        }
+        
+        return crisisTypeDTOList;
     }
 
     public CrisisType addCrisisType(CrisisType crisisType) {

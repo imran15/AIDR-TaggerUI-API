@@ -116,4 +116,15 @@ public class NominalAttributeResource {
         return Response.ok(new ResponseWrapper(Config.STATUS_CODE_SUCCESS)).build();
     }
     
+    @GET
+    @Produces("application/json")
+    @Path("/code/{code}")
+    public Response isAttributeExists(@PathParam("code") String code) {
+        Integer attributeID = attributeLocalEJB.isAttributeExists(code);
+        if (attributeID == null){
+            attributeID = 0;
+        }
+        String response = "{\"attributeCode\":\"" + code + "\", \"attributeID\":\"" + attributeID + "\"}";
+        return Response.ok(response).build();
+    }
 }

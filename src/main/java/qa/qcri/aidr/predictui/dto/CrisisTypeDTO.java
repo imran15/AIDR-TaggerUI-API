@@ -8,6 +8,8 @@ public class CrisisTypeDTO {
     private Integer crisisTypeID;
 
     private String name;
+    
+    private int numberOfCrisisAssociated;
 
     public CrisisTypeDTO() {
     }
@@ -35,6 +37,20 @@ public class CrisisTypeDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * @return the numberOfCrisisAssociated
+     */
+    public int getNumberOfCrisisAssociated() {
+        return numberOfCrisisAssociated;
+    }
+
+    /**
+     * @param numberOfCrisisAssociated the numberOfCrisisAssociated to set
+     */
+    public void setNumberOfCrisisAssociated(int numberOfCrisisAssociated) {
+        this.numberOfCrisisAssociated = numberOfCrisisAssociated;
     }
 
 }
