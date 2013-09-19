@@ -20,6 +20,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import qa.qcri.aidr.predictui.dto.NominalLabelDTO;
 import qa.qcri.aidr.predictui.entities.NominalLabel;
 import qa.qcri.aidr.predictui.facade.NominalLabelResourceFacade;
 
@@ -62,7 +63,7 @@ public class NominalLabelResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addLabel(NominalLabel label){
+    public Response addLabel(NominalLabelDTO label){
      
         NominalLabel newLabel =  labelLocal.addNominalLabel(label);
         return Response.ok(newLabel).build();

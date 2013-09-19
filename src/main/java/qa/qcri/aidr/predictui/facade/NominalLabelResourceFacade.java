@@ -6,6 +6,7 @@ package qa.qcri.aidr.predictui.facade;
 
 import java.util.List;
 import javax.ejb.Local;
+import qa.qcri.aidr.predictui.dto.NominalLabelDTO;
 import qa.qcri.aidr.predictui.entities.NominalLabel;
 
 
@@ -16,7 +17,7 @@ import qa.qcri.aidr.predictui.entities.NominalLabel;
 @Local
 public interface NominalLabelResourceFacade {
     
-   public NominalLabel addNominalLabel(NominalLabel label); 
+   public NominalLabel addNominalLabel(NominalLabelDTO label); 
    
    public NominalLabel editNominalLabel(NominalLabel label);
    

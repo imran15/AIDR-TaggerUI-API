@@ -11,7 +11,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import qa.qcri.aidr.predictui.dto.NominalLabelDTO;
 import qa.qcri.aidr.predictui.entities.Crisis;
+import qa.qcri.aidr.predictui.entities.NominalAttribute;
 import qa.qcri.aidr.predictui.entities.NominalLabel;
 import qa.qcri.aidr.predictui.facade.NominalLabelResourceFacade;
 
@@ -25,11 +27,20 @@ public class NominalLabelResourceImp implements NominalLabelResourceFacade {
     @PersistenceContext(unitName = "qa.qcri.aidr.predictui-EJBS")
     private EntityManager em;
 
-    public NominalLabel addNominalLabel(NominalLabel label) {
-        //if (label != null) {
-            em.persist(label);
-       // }
-        return label;
+    public NominalLabel addNominalLabel(NominalLabelDTO label) {
+        
+        Query attributeQuery = em.createNamedQuery("NominalAttribute.findByNominalAttributeID", NominalAttribute.class);
+        attributeQuery.setParameter("nominalAttributeID", label.getNominalAttributeID());
+        NominalAttribute dbAtt = (NominalAttribute)attributeQuery.getSingleResult();
+        
+        NominalLabel labelDB = new NominalLabel();
+        labelDB.setDescription(label.getDescription());
+        labelDB.setName(label.getName());
+        labelDB.setNominalAttribute(dbAtt);
+        labelDB.setNominalLabelCode(label.getNominalLabelCode());
+        
+        em.persist(labelDB);
+        return labelDB;
     }
 
     public NominalLabel getNominalLabelByID(int id) {

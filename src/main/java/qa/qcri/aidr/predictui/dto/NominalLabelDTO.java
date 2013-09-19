@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package qa.qcri.aidr.predictui.entities;
+package qa.qcri.aidr.predictui.dto;
 
+import qa.qcri.aidr.predictui.entities.*;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -30,55 +31,24 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  *
  * @author Imran
  */
-@Entity
-@Table(name = "nominal_label")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "NominalLabel.findAll", query = "SELECT n FROM NominalLabel n"),
-    @NamedQuery(name = "NominalLabel.findByNominalLabelID", query = "SELECT n FROM NominalLabel n WHERE n.nominalLabelID = :nominalLabelID"),
-    @NamedQuery(name = "NominalLabel.findByNominalLabelCode", query = "SELECT n FROM NominalLabel n WHERE n.nominalLabelCode = :nominalLabelCode"),
-    @NamedQuery(name = "NominalLabel.findByName", query = "SELECT n FROM NominalLabel n WHERE n.name = :name"),
-    @NamedQuery(name = "NominalLabel.findByDescription", query = "SELECT n FROM NominalLabel n WHERE n.description = :description"),
-    @NamedQuery(name = "NominalLabel.findByNominalAttribute", query = "SELECT n FROM NominalLabel n WHERE n.nominalAttribute = :nominalAttribute")})
-public class NominalLabel implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "nominalLabelID")
+public class NominalLabelDTO implements Serializable {
     private Integer nominalLabelID;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 15)
-    @Column(name = "nominalLabelCode")
     private String nominalLabelCode;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "name")
     private String name;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 600)
-    @Column(name = "description")
     private String description;
-    @ManyToMany(mappedBy = "nominalLabelCollection")
     private Collection<Document> documentCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nominalLabel")
     private Collection<ModelNominalLabel> modelNominalLabelCollection;
-    
-    @JoinColumn(name = "nominalAttributeID", referencedColumnName = "nominalAttributeID")
-    @ManyToOne(optional = false)
-    private NominalAttribute nominalAttribute;
+    private Integer nominalAttributeID;
 
-    public NominalLabel() {
+    public NominalLabelDTO() {
     }
 
-    public NominalLabel(Integer nominalLabelID) {
+    public NominalLabelDTO(Integer nominalLabelID) {
         this.nominalLabelID = nominalLabelID;
     }
 
-    public NominalLabel(Integer nominalLabelID, String nominalLabelCode, String name, String description) {
+    public NominalLabelDTO(Integer nominalLabelID, String nominalLabelCode, String name, String description) {
         this.nominalLabelID = nominalLabelID;
         this.nominalLabelCode = nominalLabelCode;
         this.name = name;
@@ -137,15 +107,6 @@ public class NominalLabel implements Serializable {
         this.modelNominalLabelCollection = modelNominalLabelCollection;
     }
 
-    @XmlTransient
-    @JsonIgnore
-    public NominalAttribute getNominalAttribute() {
-        return nominalAttribute;
-    }
-
-    public void setNominalAttribute(NominalAttribute nominalAttribute) {
-        this.nominalAttribute = nominalAttribute;
-    }
 
     @Override
     public int hashCode() {
@@ -154,22 +115,25 @@ public class NominalLabel implements Serializable {
         return hash;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof NominalLabel)) {
-            return false;
-        }
-        NominalLabel other = (NominalLabel) object;
-        if ((this.nominalLabelID == null && other.nominalLabelID != null) || (this.nominalLabelID != null && !this.nominalLabelID.equals(other.nominalLabelID))) {
-            return false;
-        }
-        return true;
-    }
+  
 
     @Override
     public String toString() {
         return "qa.qcri.aidr.predictui.entities.NominalLabel[ nominalLabelID=" + nominalLabelID + " ]";
+    }
+
+    /**
+     * @return the nominalAttributeID
+     */
+    public Integer getNominalAttributeID() {
+        return nominalAttributeID;
+    }
+
+    /**
+     * @param nominalAttributeID the nominalAttributeID to set
+     */
+    public void setNominalAttributeID(Integer nominalAttributeID) {
+        this.nominalAttributeID = nominalAttributeID;
     }
     
 }
