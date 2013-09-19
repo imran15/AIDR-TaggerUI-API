@@ -23,6 +23,7 @@ public interface NominalLabelResourceFacade {
    public void deleteNominalLabel(int labelID);
    
    public NominalLabel getNominalLabelByID(int id);
+   
    public List<NominalLabel> getAllNominalLabel(); 
    
     

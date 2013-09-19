@@ -16,6 +16,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -40,7 +41,7 @@ public class NominalLabelResource {
     }
     
     @GET
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/all")
     public Response getAllNominalLabels() {
         List<NominalLabel> labelList = labelLocal.getAllNominalLabel();
@@ -48,10 +49,18 @@ public class NominalLabelResource {
         response.setNominalLabels(labelList);
         return Response.ok(response).build();
     }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("{id}")
+    public Response getNominalLabelByID(@PathParam("id") int labelID) {
+        NominalLabel label = labelLocal.getNominalLabelByID(labelID);
+        return Response.ok(label).build();
+    }
 
     
     @POST
-    @Consumes("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addLabel(NominalLabel label){
      
@@ -60,7 +69,7 @@ public class NominalLabelResource {
     }
     
     @PUT
-    @Consumes("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response editLabel(NominalLabel label){
         NominalLabel newLabel =  labelLocal.editNominalLabel(label);
@@ -68,9 +77,10 @@ public class NominalLabelResource {
     }
     
     @DELETE
-    @Consumes("application/json")
+    @Path("{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteLabel(int labelID){
+    public Response deleteLabel(@PathParam("id") int labelID){
         try{
         labelLocal.deleteNominalLabel(labelID);
         }catch(RuntimeException e){

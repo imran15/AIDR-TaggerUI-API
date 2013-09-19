@@ -35,8 +35,8 @@ public class NominalLabelResourceImp implements NominalLabelResourceFacade {
     public NominalLabel getNominalLabelByID(int id) {
         NominalLabel label = null;
 
-        Query query = em.createNamedQuery("Crisis.findByCrisisID", Crisis.class);
-        query.setParameter("crisisID", id);
+        Query query = em.createNamedQuery("NominalLabel.findByNominalLabelID", NominalLabel.class);
+        query.setParameter("nominalLabelID", id);
         if (query.getSingleResult() != null) {
             label = (NominalLabel) query.getSingleResult();
         }
