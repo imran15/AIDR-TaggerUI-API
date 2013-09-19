@@ -19,7 +19,7 @@ public interface NominalLabelResourceFacade {
     
    public NominalLabel addNominalLabel(NominalLabelDTO label); 
    
-   public NominalLabel editNominalLabel(NominalLabel label);
+   public NominalLabel editNominalLabel(NominalLabelDTO label);
    
    public void deleteNominalLabel(int labelID);
    

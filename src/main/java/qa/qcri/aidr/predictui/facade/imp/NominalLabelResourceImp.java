@@ -28,48 +28,64 @@ public class NominalLabelResourceImp implements NominalLabelResourceFacade {
     private EntityManager em;
 
     public NominalLabel addNominalLabel(NominalLabelDTO label) {
-        
+
         Query attributeQuery = em.createNamedQuery("NominalAttribute.findByNominalAttributeID", NominalAttribute.class);
         attributeQuery.setParameter("nominalAttributeID", label.getNominalAttributeID());
-        NominalAttribute dbAtt = (NominalAttribute)attributeQuery.getSingleResult();
-        
+        NominalAttribute dbAtt = (NominalAttribute) attributeQuery.getSingleResult();
+
         NominalLabel labelDB = new NominalLabel();
         labelDB.setDescription(label.getDescription());
         labelDB.setName(label.getName());
         labelDB.setNominalAttribute(dbAtt);
         labelDB.setNominalLabelCode(label.getNominalLabelCode());
-        
+
         em.persist(labelDB);
         return labelDB;
     }
 
     public NominalLabel getNominalLabelByID(int id) {
         NominalLabel label = null;
+        try {
+            Query query = em.createNamedQuery("NominalLabel.findByNominalLabelID", NominalLabel.class);
+            query.setParameter("nominalLabelID", id);
 
-        Query query = em.createNamedQuery("NominalLabel.findByNominalLabelID", NominalLabel.class);
-        query.setParameter("nominalLabelID", id);
-        if (query.getSingleResult() != null) {
             label = (NominalLabel) query.getSingleResult();
+
+        } catch (NoResultException e) {
+            return null;
         }
 
         return label;
     }
 
     @Override
-    public NominalLabel editNominalLabel(NominalLabel label) {
+    public NominalLabel editNominalLabel(NominalLabelDTO label) {
         if (label == null) {
             return null;
         }
+        NominalLabel labelToDB = new NominalLabel();
         try {
-            NominalLabel dbLabel = em.find(NominalLabel.class, label.getNominalLabelID());
+            
+            Query attributeQuery = em.createNamedQuery("NominalAttribute.findByNominalAttributeID", NominalAttribute.class);
+        attributeQuery.setParameter("nominalAttributeID", label.getNominalAttributeID());
+        NominalAttribute dbAtt = (NominalAttribute) attributeQuery.getSingleResult();
+
+        
+        labelToDB.setDescription(label.getDescription());
+        labelToDB.setName(label.getName());
+        labelToDB.setNominalAttribute(dbAtt);
+        labelToDB.setNominalLabelCode(label.getNominalLabelCode());
+        labelToDB.setNominalLabelID(label.getNominalLabelID());
+            
+            NominalLabel dbLabel = em.find(NominalLabel.class, labelToDB.getNominalLabelID());
             if (dbLabel != null) {
-                em.merge(label);
-                return label;
+                em.merge(labelToDB);
+                return labelToDB;
             }
         } catch (NoResultException e) {
             return null;
         }
-        return label;
+        return labelToDB;
 
     }
 
@@ -83,7 +99,7 @@ public class NominalLabelResourceImp implements NominalLabelResourceFacade {
     @Override
     public void deleteNominalLabel(int labelID) {
         NominalLabel label = em.find(NominalLabel.class, labelID);
-        if (label != null){
+        if (label != null) {
             em.remove(label);
         }
     }

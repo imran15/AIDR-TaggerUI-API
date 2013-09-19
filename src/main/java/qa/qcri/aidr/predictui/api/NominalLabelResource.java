@@ -56,6 +56,9 @@ public class NominalLabelResource {
     @Path("{id}")
     public Response getNominalLabelByID(@PathParam("id") int labelID) {
         NominalLabel label = labelLocal.getNominalLabelByID(labelID);
+        if (label == null)
+            return Response.noContent().build();
+        
         return Response.ok(label).build();
     }
 
@@ -72,7 +75,7 @@ public class NominalLabelResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response editLabel(NominalLabel label){
+    public Response editLabel(NominalLabelDTO label){
         NominalLabel newLabel =  labelLocal.editNominalLabel(label);
         return Response.ok(newLabel).build();
     }
