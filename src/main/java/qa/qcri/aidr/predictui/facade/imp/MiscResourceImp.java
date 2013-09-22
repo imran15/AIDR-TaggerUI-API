@@ -27,21 +27,22 @@ public class MiscResourceImp implements MiscResourceFacade {
     private EntityManager em;
 
     @Override
-    public List<TrainingDataDTO> getTraningDataByCrisisAndAttribute(int crisisID, int modelFamilyID, int fromRecord, int limit) {
+    public List<TrainingDataDTO> getTraningDataByCrisisAndAttribute(int crisisID, int modelID, int fromRecord, int limit) {
         List<TrainingDataDTO> trainingDataList = new ArrayList();
         String sql = " SELECT lbl.nominalLabelID, lbl.name labelName, d.data, u.userID, u.name, dnl.timestamp \n"
                 + " FROM document_nominal_label dnl\n"
                 + " JOIN nominal_label lbl on lbl.nominalLabelID=dnl.nominalLabelID\n"
                 + " JOIN model_family mf on mf.nominalAttributeID=lbl.nominalAttributeID \n"
+                + " JOIN model m on m.modelFamilyID= mf.modelFamilyID \n"
                 + " JOIN document d on d.documentID = dnl.documentID \n"
                 + " JOIN task_answer ta on ta.documentID = d.documentID \n"
                 + " JOIN users u on u.userID = ta.userID \n"
                 + " AND d.crisisID = :crisisID \n"
-                + " WHERE mf.modelFamilyID = :modelFamilyID LIMIT :fromRecord, :limit";
+                + " WHERE m.modelID = :modelID LIMIT :fromRecord, :limit";
         try {
             Query query = em.createNativeQuery(sql);
             query.setParameter("crisisID", crisisID);
-            query.setParameter("modelFamilyID", modelFamilyID);
+            query.setParameter("modelID", modelID);
             query.setParameter("fromRecord", fromRecord);
             query.setParameter("limit", limit);
             

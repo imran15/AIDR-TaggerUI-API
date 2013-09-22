@@ -42,12 +42,12 @@ public class MiscResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getTrainingData")
-    public Response getTrainingDataByCrisisAndAttribute(@QueryParam("crisisID") int crisisID, @QueryParam("modelFamilyID") int mfID,
+    public Response getTrainingDataByCrisisAndAttribute(@QueryParam("crisisID") int crisisID, @QueryParam("modelID") int modelID,
                     @DefaultValue("0") @QueryParam("fromRecord") int fromRecord, @DefaultValue("100") @QueryParam("limit") int limit) {
         List<TrainingDataDTO> trainingDataList = new ArrayList();
         ResponseWrapper response = new ResponseWrapper();
         try {
-            trainingDataList = miscEJB.getTraningDataByCrisisAndAttribute(crisisID, mfID, fromRecord, limit);
+            trainingDataList = miscEJB.getTraningDataByCrisisAndAttribute(crisisID, modelID, fromRecord, limit);
             response.setTrainingData(trainingDataList);
         } catch (RuntimeException e) {
             return Response.ok(new ResponseWrapper(Config.STATUS_CODE_FAILED, e.getCause().getCause().getMessage())).build();
