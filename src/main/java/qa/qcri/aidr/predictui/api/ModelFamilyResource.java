@@ -69,7 +69,7 @@ public class ModelFamilyResource {
        ModelFamily modelFamily = modelFamilyLocalEJB.getModelFamilyByID(id);
        return Response.ok(modelFamily).build();
    }
-
+   
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
