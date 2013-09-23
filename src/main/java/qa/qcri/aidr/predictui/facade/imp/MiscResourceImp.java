@@ -39,7 +39,28 @@ public class MiscResourceImp implements MiscResourceFacade {
                 + " JOIN users u on u.userID = ta.userID \n"
                 + " AND d.crisisID = :crisisID \n"
                 + " WHERE m.modelID = :modelID LIMIT :fromRecord, :limit";
+        
+        String sqlCount = " SELECT count(*)  \n"
+                + " FROM document_nominal_label dnl\n"
+                + " JOIN nominal_label lbl on lbl.nominalLabelID=dnl.nominalLabelID\n"
+                + " JOIN model_family mf on mf.nominalAttributeID=lbl.nominalAttributeID \n"
+                + " JOIN model m on m.modelFamilyID= mf.modelFamilyID \n"
+                + " JOIN document d on d.documentID = dnl.documentID \n"
+                + " JOIN task_answer ta on ta.documentID = d.documentID \n"
+                + " JOIN users u on u.userID = ta.userID \n"
+                + " AND d.crisisID = :crisisID \n"
+                + " WHERE m.modelID = :modelID ";
         try {
+            Integer totalRows = 0;
+            
+            if(fromRecord == 0){
+            Query queryCount = em.createNativeQuery(sqlCount);
+            queryCount.setParameter("crisisID", crisisID);
+            queryCount.setParameter("modelID", modelID);
+            Object res = queryCount.getSingleResult();
+            totalRows = Integer.parseInt(res.toString());
+            }
+            
             Query query = em.createNativeQuery(sql);
             query.setParameter("crisisID", crisisID);
             query.setParameter("modelID", modelID);
@@ -59,6 +80,7 @@ public class MiscResourceImp implements MiscResourceFacade {
                 trainingDataRow.setLabelerID(((Integer) row[3]).intValue());
                 trainingDataRow.setLabelerName((String) row[4]);
                 trainingDataRow.setLabeledTime(((Date) row[5]));
+                trainingDataRow.setTotalRows(totalRows);
                 trainingDataList.add(trainingDataRow);
             }
             return trainingDataList;
