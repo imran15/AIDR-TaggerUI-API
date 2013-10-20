@@ -58,17 +58,6 @@ public class ModelResource {
    }
    
    
-//   @GET
-//   @Produces(MediaType.APPLICATION_JSON)
-//   @Path("attribute/{modelFamilyID}")
-//   public Response getModelByModelFamilyID(@PathParam("modelFamilyID") int modelFamilyID){
-//       List<Model> modelList = modelLocalEJB.getModelByModelFamilyID(modelFamilyID);
-//       ResponseWrapper response = new ResponseWrapper();
-//        response.setMessage(Config.STATUS_CODE_SUCCESS);
-//        response.setModels(modelList);
-//       return Response.ok(response).build();
-//   }
-   
    @GET
    @Produces(MediaType.APPLICATION_JSON)
    @Path("crisis/{crisisID}")
