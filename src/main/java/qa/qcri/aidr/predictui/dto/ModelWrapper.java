@@ -11,6 +11,7 @@ package qa.qcri.aidr.predictui.dto;
 public class ModelWrapper {
     
     private Integer modelID;
+    private Integer modelFamilyID;
     private String attribute;
     private String status;
     private long trainingExamples;
@@ -99,6 +100,20 @@ public class ModelWrapper {
      */
     public void setModelID(Integer modelID) {
         this.modelID = modelID;
+    }
+
+    /**
+     * @return the modelFamilyID
+     */
+    public Integer getModelFamilyID() {
+        return modelFamilyID;
+    }
+
+    /**
+     * @param modelFamilyID the modelFamilyID to set
+     */
+    public void setModelFamilyID(Integer modelFamilyID) {
+        this.modelFamilyID = modelFamilyID;
     }
     
     

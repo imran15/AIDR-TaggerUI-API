@@ -38,7 +38,7 @@ public class MiscResourceImp implements MiscResourceFacade {
                 + " JOIN task_answer ta on ta.documentID = d.documentID \n"
                 + " JOIN users u on u.userID = ta.userID \n"
                 + " AND d.crisisID = :crisisID \n"
-                + " WHERE m.modelID = :modelID LIMIT :fromRecord, :limit";
+                + " WHERE mf.modelID = :modelID LIMIT :fromRecord, :limit";
         
         String sqlCount = " SELECT count(*)  \n"
                 + " FROM document_nominal_label dnl\n"

@@ -69,6 +69,7 @@ public class ModelFacadeImp implements ModelFacade {
         for (ModelFamily modelFamily : modelFamilyList) {
             Collection<Model> modelList = modelFamily.getModelCollection();
             ModelWrapper modelWrapper = new ModelWrapper();
+            modelWrapper.setModelFamilyID(modelFamily.getModelFamilyID());
             long classigiedElements = 0;
             double auc = 0.0;
             double aucAverage = 0.0;
