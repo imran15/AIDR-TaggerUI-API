@@ -34,28 +34,28 @@ public class MiscResourceImp implements MiscResourceFacade {
 
     @Override
     public List<TrainingDataDTO> getTraningDataByCrisisAndAttribute(int crisisID, int modelFamilyID, int fromRecord, int limit) {
-        List<TrainingDataDTO> trainingDataList = new ArrayList();
-        String sql = " SELECT lbl.nominalLabelID, lbl.name labelName, d.data, u.userID, u.name, dnl.timestamp \n"
-                + " FROM document_nominal_label dnl\n"
-                + " JOIN nominal_label lbl on lbl.nominalLabelID=dnl.nominalLabelID\n"
-                + " JOIN model_family mf on mf.nominalAttributeID=lbl.nominalAttributeID \n"
-                //+ " JOIN model m on m.modelFamilyID= mf.modelFamilyID \n"
-                + " JOIN document d on d.documentID = dnl.documentID \n"
-                + " JOIN task_answer ta on ta.documentID = d.documentID \n"
-                + " JOIN users u on u.userID = ta.userID \n"
-                + " AND d.crisisID = :crisisID \n"
+        List<TrainingDataDTO> trainingDataList = new ArrayList<TrainingDataDTO>();
+        String sql = " SELECT lbl.nominalLabelID, lbl.name labelName, d.data, u.userID, u.name, dnl.timestamp "
+                + " FROM document_nominal_label dnl "
+                + " JOIN nominal_label lbl on lbl.nominalLabelID=dnl.nominalLabelID "
+                + " JOIN model_family mf on mf.nominalAttributeID=lbl.nominalAttributeID "
+                //+ " JOIN model m on m.modelFamilyID= mf.modelFamilyID "
+                + " JOIN document d on d.documentID = dnl.documentID "
+                + " JOIN task_answer ta on ta.documentID = d.documentID "
+                + " JOIN users u on u.userID = ta.userID "
+                + " AND d.crisisID = :crisisID "
                 + " WHERE mf.modelFamilyID = :modelFamilyID LIMIT :fromRecord, :limit";
         
-        String sqlCount = " SELECT count(*)  \n"
-                + " FROM document_nominal_label dnl\n"
-                + " JOIN nominal_label lbl on lbl.nominalLabelID=dnl.nominalLabelID\n"
-                + " JOIN model_family mf on mf.nominalAttributeID=lbl.nominalAttributeID \n"
-                //+ " JOIN model m on m.modelFamilyID= mf.modelFamilyID \n"
-                + " JOIN document d on d.documentID = dnl.documentID \n"
-                + " JOIN task_answer ta on ta.documentID = d.documentID \n"
-                + " JOIN users u on u.userID = ta.userID \n"
-                + " AND d.crisisID = :crisisID \n"
-                + " WHERE m.modelFamilyID = :modelFamilyID ";
+        String sqlCount = " SELECT count(*) "
+                + " FROM document_nominal_label dnl "
+                + " JOIN nominal_label lbl on lbl.nominalLabelID=dnl.nominalLabelID "
+                + " JOIN model_family mf on mf.nominalAttributeID=lbl.nominalAttributeID "
+                //+ " JOIN model m on m.modelFamilyID= mf.modelFamilyID "
+                + " JOIN document d on d.documentID = dnl.documentID "
+                + " JOIN task_answer ta on ta.documentID = d.documentID "
+                + " JOIN users u on u.userID = ta.userID "
+                + " AND d.crisisID = :crisisID "
+                + " WHERE mf.modelFamilyID = :modelFamilyID ";
         try {
             Integer totalRows = 0;
             
