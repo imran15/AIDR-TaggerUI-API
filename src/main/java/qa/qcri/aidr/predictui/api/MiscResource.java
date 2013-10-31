@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import org.apache.commons.collections.iterators.ArrayListIterator;
+import qa.qcri.aidr.predictui.dto.ItemToLabelDTO;
 import qa.qcri.aidr.predictui.dto.TrainingDataDTO;
 
 import qa.qcri.aidr.predictui.entities.Crisis;
@@ -42,17 +43,30 @@ public class MiscResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getTrainingData")
-    public Response getTrainingDataByCrisisAndAttribute(@QueryParam("crisisID") int crisisID, @QueryParam("modelID") int modelID,
+    public Response getTrainingDataByCrisisAndAttribute(@QueryParam("crisisID") int crisisID, @QueryParam("modelFamilyID") int modelFamilyID,
                     @DefaultValue("0") @QueryParam("fromRecord") int fromRecord, @DefaultValue("100") @QueryParam("limit") int limit) {
         List<TrainingDataDTO> trainingDataList = new ArrayList();
         ResponseWrapper response = new ResponseWrapper();
         try {
-            trainingDataList = miscEJB.getTraningDataByCrisisAndAttribute(crisisID, modelID, fromRecord, limit);
+            trainingDataList = miscEJB.getTraningDataByCrisisAndAttribute(crisisID, modelFamilyID, fromRecord, limit);
             response.setTrainingData(trainingDataList);
         } catch (RuntimeException e) {
             return Response.ok(new ResponseWrapper(Config.STATUS_CODE_FAILED, e.getCause().getCause().getMessage())).build();
         }
         return Response.ok(response).build();
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/getItem")
+    public Response getItemToLabel(@QueryParam("crisisID") int crisisID, @QueryParam("attributeID") int attributeID) {
+        ItemToLabelDTO item = new ItemToLabelDTO();
+        try {
+            item = miscEJB.getItemToLabel(crisisID, attributeID);
+        } catch (RuntimeException e) {
+            System.out.println("Exception : " +  e);
+        }
+       return Response.ok(item).build();
     }
 
 }

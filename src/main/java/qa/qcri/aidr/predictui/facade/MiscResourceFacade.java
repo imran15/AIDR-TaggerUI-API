@@ -7,6 +7,7 @@ package qa.qcri.aidr.predictui.facade;
 import java.util.List;
 import javax.ejb.Local;
 import javax.persistence.PersistenceException;
+import qa.qcri.aidr.predictui.dto.ItemToLabelDTO;
 import qa.qcri.aidr.predictui.dto.TrainingDataDTO;
 
 /**
@@ -16,6 +17,7 @@ import qa.qcri.aidr.predictui.dto.TrainingDataDTO;
 @Local
 public interface MiscResourceFacade {
     
-   public List<TrainingDataDTO> getTraningDataByCrisisAndAttribute(int crisisID, int attributeID, int fromRecord, int limit);
+   public List<TrainingDataDTO> getTraningDataByCrisisAndAttribute(int crisisID, int modelFamilyID, int fromRecord, int limit);
+   public ItemToLabelDTO getItemToLabel(int crisisID, int attributeID);
    
 }
