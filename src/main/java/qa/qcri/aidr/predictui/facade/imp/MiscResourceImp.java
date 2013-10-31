@@ -43,8 +43,7 @@ public class MiscResourceImp implements MiscResourceFacade {
                 + " JOIN document d on d.documentID = dnl.documentID "
                 + " JOIN task_answer ta on ta.documentID = d.documentID "
                 + " JOIN users u on u.userID = ta.userID "
-                + " AND d.crisisID = :crisisID "
-                + " WHERE mf.modelFamilyID = :modelFamilyID LIMIT :fromRecord, :limit";
+                + " WHERE mf.modelFamilyID = :modelFamilyID AND d.crisisID = :crisisID LIMIT :fromRecord, :limit";
         
         String sqlCount = " SELECT count(*) "
                 + " FROM document_nominal_label dnl "
@@ -54,8 +53,7 @@ public class MiscResourceImp implements MiscResourceFacade {
                 + " JOIN document d on d.documentID = dnl.documentID "
                 + " JOIN task_answer ta on ta.documentID = d.documentID "
                 + " JOIN users u on u.userID = ta.userID "
-                + " AND d.crisisID = :crisisID "
-                + " WHERE mf.modelFamilyID = :modelFamilyID ";
+                + " WHERE mf.modelFamilyID = :modelFamilyID AND d.crisisID = :crisisID ";
         try {
             Integer totalRows = 0;
             
