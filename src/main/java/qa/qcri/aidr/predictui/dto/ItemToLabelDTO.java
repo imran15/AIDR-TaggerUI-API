@@ -4,6 +4,7 @@
  */
 package qa.qcri.aidr.predictui.dto;
 
+import java.math.BigInteger;
 import javax.xml.bind.annotation.XmlRootElement;
 import qa.qcri.aidr.predictui.entities.NominalAttribute;
 
@@ -14,6 +15,7 @@ import qa.qcri.aidr.predictui.entities.NominalAttribute;
 @XmlRootElement
 public class ItemToLabelDTO {
     
+    private BigInteger itemID;
     private String itemText;
     private NominalAttributeDTO attribute;
 
@@ -43,6 +45,20 @@ public class ItemToLabelDTO {
      */
     public void setAttribute(NominalAttributeDTO attribute) {
         this.attribute = attribute;
+    }
+
+    /**
+     * @return the itemID
+     */
+    public BigInteger getItemID() {
+        return itemID;
+    }
+
+    /**
+     * @param itemID the itemID to set
+     */
+    public void setItemID(BigInteger itemID) {
+        this.itemID = itemID;
     }
     
     

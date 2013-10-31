@@ -4,6 +4,8 @@
  */
 package qa.qcri.aidr.predictui.facade.imp;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -94,28 +96,27 @@ public class MiscResourceImp implements MiscResourceFacade {
     }
 
     @Override
-    public ItemToLabelDTO getItemToLabel(int crisisID, int attributeID) {
+    public ItemToLabelDTO getItemToLabel(int crisisID, int modelFamilyID) {
         // with attributeID get attribute and labels details
         // with crisisID get an item from document table for which hasHumanLabel is FALSE
         // packup both info into one class DTO and return
         
-        String sqlToGetAttribute = "SELECT code, name, description FROM nominal_attribute WHERE nominalAttributeID = :attributeID";
-        
-        String sqlToGetLabel = "SELECT nominalLabelCode, name, description FROM nominal_label WHERE nominalAttributeID = :attributeID";
-        //String sqlToGetItem = "SELECT data FROM document WHERE crisisID = :crisisID";
         NominalAttributeDTO attributeDTO = new NominalAttributeDTO();
         ItemToLabelDTO itemToLabel = new ItemToLabelDTO();
         try{
+            String sqlToGetAttribute = "SELECT na.nominalAttributeID, na.code, na.name, na.description FROM nominal_attribute na"
+                    + " JOIN model_family mf on mf.nominalAttributeID = na.nominalAttributeID WHERE mf.modelFamilyID = :modelFamilyID";
             Query attributeQuery = em.createNativeQuery(sqlToGetAttribute);
-            attributeQuery.setParameter("attributeID", attributeID);
+            attributeQuery.setParameter("modelFamilyID", modelFamilyID);
             List<Object[]> attributeResults = attributeQuery.getResultList();
-            System.out.println(attributeResults.get(0)[0]); 
-            attributeDTO.setCode((String) attributeResults.get(0)[0]);
-            attributeDTO.setName((String) attributeResults.get(0)[1]);
-            attributeDTO.setDescription((String) attributeResults.get(0)[2]);
+            attributeDTO.setNominalAttributeID(((Integer)attributeResults.get(0)[0]).intValue());
+            attributeDTO.setCode((String) attributeResults.get(0)[1]);
+            attributeDTO.setName((String) attributeResults.get(0)[2]);
+            attributeDTO.setDescription((String) attributeResults.get(0)[3]);
             
+            String sqlToGetLabel = "SELECT nominalLabelCode, name, description FROM nominal_label WHERE nominalAttributeID = :attributeID";
             Query labelQuery = em.createNativeQuery(sqlToGetLabel);
-            labelQuery.setParameter("attributeID", attributeID);
+            labelQuery.setParameter("attributeID", attributeDTO.getNominalAttributeID());
             List<Object[]> labelsResults = labelQuery.getResultList();
             
             Collection<NominalLabelDTO> labelDTOList = new ArrayList<NominalLabelDTO>();
@@ -131,6 +132,12 @@ public class MiscResourceImp implements MiscResourceFacade {
             attributeDTO.setNominalLabelCollection(labelDTOList);
             
             //here retrieve data from document table
+            String sqlToGetItem = "SELECT documentID, data FROM document WHERE crisisID = :crisisID AND hasHumanLabels = 0 ORDER BY RAND() LIMIT 0, 1";
+            Query documentQuery = em.createNativeQuery(sqlToGetItem);
+            documentQuery.setParameter("crisisID", crisisID);
+            List<Object[]> documentResult = documentQuery.getResultList();
+            itemToLabel.setItemID(((BigInteger) documentResult.get(0)[0]));
+            itemToLabel.setItemText(documentResult.get(0)[1].toString());
             
             itemToLabel.setAttribute(attributeDTO);
             
