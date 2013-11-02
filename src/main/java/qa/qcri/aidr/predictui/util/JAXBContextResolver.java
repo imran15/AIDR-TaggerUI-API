@@ -2,6 +2,7 @@ package qa.qcri.aidr.predictui.util;
 
 import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.api.json.JSONJAXBContext;
+import qa.qcri.aidr.predictui.entities.NominalAttribute;
 
 import javax.ws.rs.ext.ContextResolver;
 import javax.xml.bind.JAXBContext;
@@ -15,7 +16,8 @@ public class JAXBContextResolver implements ContextResolver<JAXBContext> {
     private JAXBContext context;
 
     private final Class[] types = {
-            ResponseWrapper.class
+            ResponseWrapper.class,
+            NominalAttribute.class
     };
 
     public JAXBContextResolver() throws Exception {
