@@ -56,14 +56,15 @@ public class MiscResourceImp implements MiscResourceFacade {
                 + " WHERE mf.modelFamilyID = :modelFamilyID AND d.crisisID = :crisisID ";
         try {
             Integer totalRows = 0;
-            
-            if(fromRecord == 0){
+
+//            we always need totalRows for proper paging
+//            if(fromRecord == 0){
             Query queryCount = em.createNativeQuery(sqlCount);
             queryCount.setParameter("crisisID", crisisID);
             queryCount.setParameter("modelFamilyID", modelFamilyID);
             Object res = queryCount.getSingleResult();
             totalRows = Integer.parseInt(res.toString());
-            }
+//            }
             
             Query query = em.createNativeQuery(sql);
             query.setParameter("crisisID", crisisID);
