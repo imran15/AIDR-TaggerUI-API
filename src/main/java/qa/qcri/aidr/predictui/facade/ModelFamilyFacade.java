@@ -19,5 +19,6 @@ public interface ModelFamilyFacade {
     public List<ModelFamily> getAllModelFamiliesByCrisis(int crisisID);
     public ModelFamily getModelFamilyByID(int id);
     public ModelFamily addCrisisAttribute(ModelFamily modelFamily);
+    public void deleteModelFamily(int modelFamilyID);
     
 }

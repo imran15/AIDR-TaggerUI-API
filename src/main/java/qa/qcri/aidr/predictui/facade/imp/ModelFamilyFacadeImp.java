@@ -55,6 +55,11 @@ public class ModelFamilyFacadeImp implements ModelFamilyFacade{
         return modelFamily;
     }
     
-    
+    public void deleteModelFamily(int modelFamilyID){
+        ModelFamily mf = em.find(ModelFamily.class, modelFamilyID);
+        if (mf != null){
+            em.remove(mf);
+        }
+    }
     
 }

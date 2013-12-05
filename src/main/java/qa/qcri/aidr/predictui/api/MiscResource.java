@@ -46,6 +46,8 @@ public class MiscResource {
     public Response getTrainingDataByCrisisAndAttribute(@QueryParam("crisisID") int crisisID, @QueryParam("modelFamilyID") int modelFamilyID,
                     @DefaultValue("0") @QueryParam("fromRecord") int fromRecord, @DefaultValue("100") @QueryParam("limit") int limit) {
         List<TrainingDataDTO> trainingDataList = new ArrayList();
+        System.out.println("received crisisID :" + crisisID);
+        System.out.println("received modelFID :" + modelFamilyID);
         ResponseWrapper response = new ResponseWrapper();
         try {
             trainingDataList = miscEJB.getTraningDataByCrisisAndAttribute(crisisID, modelFamilyID, fromRecord, limit);

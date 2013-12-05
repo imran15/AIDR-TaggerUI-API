@@ -31,12 +31,15 @@ public class ApplicationConfig extends Application {
         resources.add(qa.qcri.aidr.predictui.api.CrisisResource.class);
         resources.add(qa.qcri.aidr.predictui.api.CrisisTypeResource.class);
         resources.add(qa.qcri.aidr.predictui.api.DocumentResource.class);
+        resources.add(qa.qcri.aidr.predictui.api.MiscResource.class);
         resources.add(qa.qcri.aidr.predictui.api.ModelFamilyResource.class);
         resources.add(qa.qcri.aidr.predictui.api.ModelNominalLabelResource.class);
         resources.add(qa.qcri.aidr.predictui.api.ModelResource.class);
         resources.add(qa.qcri.aidr.predictui.api.NominalAttributeResource.class);
         resources.add(qa.qcri.aidr.predictui.api.NominalLabelResource.class);
+        resources.add(qa.qcri.aidr.predictui.api.TrainingDataResource.class);
         resources.add(qa.qcri.aidr.predictui.api.UserResource.class);
+        resources.add(qa.qcri.aidr.predictui.util.JAXBContextResolver.class);
     }
     
 }

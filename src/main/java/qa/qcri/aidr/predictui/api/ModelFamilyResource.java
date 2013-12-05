@@ -11,6 +11,7 @@ import qa.qcri.aidr.predictui.util.ResponseWrapper;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Path;
@@ -22,6 +23,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import qa.qcri.aidr.predictui.entities.ModelFamily;
 import qa.qcri.aidr.predictui.facade.ModelFamilyFacade;
+import qa.qcri.aidr.predictui.util.Config;
 
 /**
  * REST Web Service
@@ -92,6 +94,20 @@ public class ModelFamilyResource {
         modelFamily.setNominalAttribute(modelFamilyDTO.getNominalAttribute());
         modelFamily.setIsActive(modelFamilyDTO.getIsActive());
         return modelFamily;
+    }
+    
+    @DELETE
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteAttribute(@PathParam("id") int id) {
+        try {
+            modelFamilyLocalEJB.deleteModelFamily(id);
+        } catch (RuntimeException e) {
+            return Response.ok(
+                    new ResponseWrapper(Config.STATUS_CODE_FAILED,
+                    "Error while deleting Classifier.")).build();
+        }
+        return Response.ok(new ResponseWrapper(Config.STATUS_CODE_SUCCESS)).build();
     }
     
 }
