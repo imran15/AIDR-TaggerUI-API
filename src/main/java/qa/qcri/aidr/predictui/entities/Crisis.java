@@ -52,7 +52,7 @@ public class Crisis implements Serializable {
     private String name;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 64)
     @Column(name = "code")
     private String code;
 //    @JoinTable(name = "crisis_nominal_attribute", joinColumns = {
