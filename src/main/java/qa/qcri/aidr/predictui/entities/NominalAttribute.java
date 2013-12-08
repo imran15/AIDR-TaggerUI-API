@@ -58,7 +58,7 @@ public class NominalAttribute implements Serializable {
     private String description;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 15)
+    @Size(min = 1, max = 64)
     @Column(name = "code")
     private String code;
 //    @ManyToMany(mappedBy = "nominalAttributeCollection")

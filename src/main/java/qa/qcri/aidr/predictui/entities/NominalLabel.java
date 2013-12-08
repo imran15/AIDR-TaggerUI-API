@@ -49,7 +49,7 @@ public class NominalLabel implements Serializable {
     private Integer nominalLabelID;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 15)
+    @Size(min = 1, max = 64)
     @Column(name = "nominalLabelCode")
     private String nominalLabelCode;
     @Basic(optional = false)
