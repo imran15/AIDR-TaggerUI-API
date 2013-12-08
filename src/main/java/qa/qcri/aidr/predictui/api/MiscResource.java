@@ -4,8 +4,12 @@
  */
 package qa.qcri.aidr.predictui.api;
 
-import java.util.ArrayList;
-import java.util.List;
+import qa.qcri.aidr.predictui.dto.ItemToLabelDTO;
+import qa.qcri.aidr.predictui.dto.TrainingDataDTO;
+import qa.qcri.aidr.predictui.facade.MiscResourceFacade;
+import qa.qcri.aidr.predictui.util.Config;
+import qa.qcri.aidr.predictui.util.ResponseWrapper;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.*;
@@ -13,15 +17,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import org.apache.commons.collections.iterators.ArrayListIterator;
-import qa.qcri.aidr.predictui.dto.ItemToLabelDTO;
-import qa.qcri.aidr.predictui.dto.TrainingDataDTO;
-
-import qa.qcri.aidr.predictui.entities.Crisis;
-import qa.qcri.aidr.predictui.facade.CrisisResourceFacade;
-import qa.qcri.aidr.predictui.facade.MiscResourceFacade;
-import qa.qcri.aidr.predictui.util.Config;
-import qa.qcri.aidr.predictui.util.ResponseWrapper;
+import java.util.List;
 
 /**
  * REST Web Service
@@ -43,14 +39,17 @@ public class MiscResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getTrainingData")
-    public Response getTrainingDataByCrisisAndAttribute(@QueryParam("crisisID") int crisisID, @QueryParam("modelFamilyID") int modelFamilyID,
-                    @DefaultValue("0") @QueryParam("fromRecord") int fromRecord, @DefaultValue("100") @QueryParam("limit") int limit) {
-        List<TrainingDataDTO> trainingDataList = new ArrayList();
+    public Response getTrainingDataByCrisisAndAttribute(@QueryParam("crisisID") int crisisID,
+                                                        @QueryParam("modelFamilyID") int modelFamilyID,
+                                                        @DefaultValue("0") @QueryParam("fromRecord") int fromRecord,
+                                                        @DefaultValue("100") @QueryParam("limit") int limit,
+                                                        @DefaultValue("") @QueryParam("sortColumn") String sortColumn,
+                                                        @DefaultValue("") @QueryParam("sortDirection") String sortDirection) {
         System.out.println("received crisisID :" + crisisID);
         System.out.println("received modelFID :" + modelFamilyID);
         ResponseWrapper response = new ResponseWrapper();
         try {
-            trainingDataList = miscEJB.getTraningDataByCrisisAndAttribute(crisisID, modelFamilyID, fromRecord, limit);
+            List<TrainingDataDTO> trainingDataList = miscEJB.getTraningDataByCrisisAndAttribute(crisisID, modelFamilyID, fromRecord, limit, sortColumn, sortDirection);
             response.setTrainingData(trainingDataList);
         } catch (RuntimeException e) {
             return Response.ok(new ResponseWrapper(Config.STATUS_CODE_FAILED, e.getCause().getCause().getMessage())).build();
