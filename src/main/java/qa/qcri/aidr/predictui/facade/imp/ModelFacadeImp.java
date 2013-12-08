@@ -74,24 +74,26 @@ public class ModelFacadeImp implements ModelFacade {
             double auc = 0.0;
             double aucAverage = 0.0;
             int modelID = 0;
-             long trainingExamples = 0;
+            long trainingExamples = 0;
 
             // if size 0 we will get NaN for aucAverage
             if (modelList.size() > 0) {
                 for (Model model : modelList) {
-                    //trainingExamples += model.getTrainingCount();
-                    auc += model.getAvgAuc();
-                    modelID = model.getModelID();
+                    if (model.getIsCurrentModel()) {
+                        auc = model.getAvgAuc();
+                        modelID = model.getModelID();
 
-                    //for each model get all the labels and sum over classifiedDocumentCount
-                    Collection<ModelNominalLabel> modelLabels = model.getModelNominalLabelCollection();
-                    int totalClassifiedDocuments = 0;
-                    for (ModelNominalLabel label : modelLabels) {
-                        totalClassifiedDocuments += label.getClassifiedDocumentCount();
+                        //for each model get all the labels and sum over classifiedDocumentCount
+                        Collection<ModelNominalLabel> modelLabels = model.getModelNominalLabelCollection();
+                        int totalClassifiedDocuments = 0;
+                        for (ModelNominalLabel label : modelLabels) {
+                            totalClassifiedDocuments += label.getClassifiedDocumentCount();
+                        }
+                        classigiedElements = totalClassifiedDocuments;
+
                     }
-                    classigiedElements = totalClassifiedDocuments;
+
                 }
-                aucAverage = auc / modelList.size();
             }
 
             //getting trainingCount
@@ -99,16 +101,19 @@ public class ModelFacadeImp implements ModelFacade {
             NominalAttribute na = modelFamily.getNominalAttribute();
             Collection<NominalLabel> nlc = na.getNominalLabelCollection();
             for (NominalLabel label : nlc) {
-                Collection<Document> dc = label.getDocumentCollection();
-                for (Document doc : dc){
-                    if (!doc.getIsEvaluationSet() && doc.getHasHumanLabels())
-                    trainingExamples ++;
+                if (!(label.getNominalLabelCode().equalsIgnoreCase("null"))) {
+                    Collection<Document> dc = label.getDocumentCollection();
+                    for (Document doc : dc) {
+                        if (!doc.getIsEvaluationSet() && doc.getHasHumanLabels()) {
+                            trainingExamples++;
+                        }
+                    }
                 }
             }
-            
+
             modelWrapper.setTrainingExamples(trainingExamples);
             modelWrapper.setAttribute(modelFamily.getNominalAttribute().getName());
-            modelWrapper.setAuc(aucAverage);
+            modelWrapper.setAuc(auc);
             modelWrapper.setClassifiedDocuments(classigiedElements);
             String status = "";
             if (modelFamily.getIsActive()) {
@@ -123,4 +128,67 @@ public class ModelFacadeImp implements ModelFacade {
         }
         return modelWrapperList;
     }
+
+//    public List<ModelWrapper> getModelByCrisisID(int crisisID) {
+//        List<ModelWrapper> modelWrapperList = new ArrayList<ModelWrapper>();
+//        Crisis crisis = em.find(Crisis.class, crisisID);
+//        Collection<ModelFamily> modelFamilyList = crisis.getModelFamilyCollection();
+//        // for each modelFamily get all the models and take avg
+//        for (ModelFamily modelFamily : modelFamilyList) {
+//            Collection<Model> modelList = modelFamily.getModelCollection();
+//            ModelWrapper modelWrapper = new ModelWrapper();
+//            modelWrapper.setModelFamilyID(modelFamily.getModelFamilyID());
+//            long classigiedElements = 0;
+//            double auc = 0.0;
+//            double aucAverage = 0.0;
+//            int modelID = 0;
+//             long trainingExamples = 0;
+//
+//            // if size 0 we will get NaN for aucAverage
+//            if (modelList.size() > 0) {
+//                for (Model model : modelList) {
+//                    //trainingExamples += model.getTrainingCount();
+//                    auc += model.getAvgAuc();
+//                    modelID = model.getModelID();
+//
+//                    //for each model get all the labels and sum over classifiedDocumentCount
+//                    Collection<ModelNominalLabel> modelLabels = model.getModelNominalLabelCollection();
+//                    int totalClassifiedDocuments = 0;
+//                    for (ModelNominalLabel label : modelLabels) {
+//                        totalClassifiedDocuments += label.getClassifiedDocumentCount();
+//                    }
+//                    classigiedElements = totalClassifiedDocuments;
+//                }
+//                aucAverage = auc / modelList.size();
+//            }
+//
+//            //getting trainingCount
+//            trainingExamples = 0;
+//            NominalAttribute na = modelFamily.getNominalAttribute();
+//            Collection<NominalLabel> nlc = na.getNominalLabelCollection();
+//            for (NominalLabel label : nlc) {
+//                Collection<Document> dc = label.getDocumentCollection();
+//                for (Document doc : dc){
+//                    if (!doc.getIsEvaluationSet() && doc.getHasHumanLabels())
+//                    trainingExamples ++;
+//                }
+//            }
+//            
+//            modelWrapper.setTrainingExamples(trainingExamples);
+//            modelWrapper.setAttribute(modelFamily.getNominalAttribute().getName());
+//            modelWrapper.setAuc(aucAverage);
+//            modelWrapper.setClassifiedDocuments(classigiedElements);
+//            String status = "";
+//            if (modelFamily.getIsActive()) {
+//                status = "Active";
+//            } else {
+//                status = "Inactive";
+//            }
+//            modelWrapper.setStatus(status);
+//            modelWrapper.setModelID(modelID);
+//
+//            modelWrapperList.add(modelWrapper);
+//        }
+//        return modelWrapperList;
+//    }
 }
